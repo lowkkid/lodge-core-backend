@@ -29,7 +29,7 @@ public class Setting {
     @Column(name = "max_guests_per_booking", nullable = false)
     private Short maxGuestsPerBooking;
 
-    @Column(name = "breakfast_price", nullable = false, precision = 7, scale = 2)
+    @Column(name = "breakfast_price", nullable = false)
     private BigDecimal breakfastPrice;
 
     @Column(name = "created_at")

@@ -32,17 +32,17 @@ public class Booking {
     @Column(name = "num_guests", nullable = false)
     private Short numGuests;
 
-    @Column(name = "cabin_price", nullable = false, precision = 7, scale = 2)
+    @Column(name = "cabin_price", nullable = false)
     private BigDecimal cabinPrice;
 
-    @Column(name = "extras_price", nullable = false, precision = 7, scale = 2)
+    @Column(name = "extras_price", nullable = false)
     @Builder.Default
     private BigDecimal extrasPrice = BigDecimal.ZERO;
 
-    @Column(name = "total_price", nullable = false, precision = 7, scale = 2)
+    @Column(name = "total_price", nullable = false)
     private BigDecimal totalPrice;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String status;
 
     @Column(name = "has_breakfast", nullable = false)
@@ -51,15 +51,15 @@ public class Booking {
     @Column(name = "is_paid", nullable = false)
     private Boolean isPaid;
 
-    @Column(columnDefinition = "TEXT")
+    @Column
     private String observations;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cabin_id", nullable = false, foreignKey = @ForeignKey(name = "fk_bookings_cabin"))
+    @JoinColumn(name = "cabin_id", nullable = false)
     private Cabin cabin;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "guest_id", nullable = false, foreignKey = @ForeignKey(name = "fk_bookings_guest"))
+    @JoinColumn(name = "guest_id", nullable = false)
     private Guest guest;
 
     @Column(name = "created_at")

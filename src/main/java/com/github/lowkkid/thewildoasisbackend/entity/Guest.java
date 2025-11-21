@@ -19,16 +19,16 @@ public class Guest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "full_name", nullable = false, length = 255)
+    @Column(name = "full_name", nullable = false)
     private String fullName;
 
-    @Column(nullable = false, unique = true, length = 255)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(length = 100)
     private String nationality;
 
-    @Column(name = "national_id", nullable = false, unique = true, length = 50)
+    @Column(name = "national_id", nullable = false, unique = true)
     private String nationalId;
 
     @Column(name = "created_at")

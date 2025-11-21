@@ -30,18 +30,18 @@ public class Cabin {
     @Column(name = "max_capacity", nullable = false)
     private Short maxCapacity;
 
-    @Column(name = "regular_price", nullable = false, precision = 7, scale = 2)
+    @Column(name = "regular_price", nullable = false)
     private BigDecimal regularPrice;
 
     @Column(nullable = false)
     @Builder.Default
     private Short discount = 0;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String description;
 
     @Lob
-    @Column(columnDefinition = "BYTEA")
+    @Column
     private byte[] image;
 }
 
