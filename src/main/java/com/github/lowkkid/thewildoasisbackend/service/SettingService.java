@@ -1,41 +1,56 @@
 package com.github.lowkkid.thewildoasisbackend.service;
 
+import com.github.lowkkid.thewildoasisbackend.dto.SettingDTO;
 import com.github.lowkkid.thewildoasisbackend.entity.Setting;
 import com.github.lowkkid.thewildoasisbackend.exception.NotFoundException;
+import com.github.lowkkid.thewildoasisbackend.mapper.SettingMapper;
 import com.github.lowkkid.thewildoasisbackend.repository.SettingRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class SettingService {
 
     private final SettingRepository settingRepository;
+    private final SettingMapper settingMapper;
 
-    public List<Setting> getAll() {
-        return settingRepository.findAll();
+    public List<SettingDTO> getAll() {
+        return settingRepository.findAll().stream()
+                .map(settingMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public Setting getById(Long id) {
-        return settingRepository.findById(id)
+    public SettingDTO getById(Long id) {
+        Setting setting = settingRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Setting with id " + id + " not found"));
+        return settingMapper.toDto(setting);
     }
 
-    public Setting create(Setting setting) {
-        return settingRepository.save(setting);
+    @Transactional
+    public SettingDTO create(SettingDTO settingDTO) {
+        Setting setting = settingMapper.toEntity(settingDTO);
+        Setting savedSetting = settingRepository.save(setting);
+        return settingMapper.toDto(savedSetting);
     }
 
-    public Setting update(Long id, Setting setting) {
-        Setting existingSetting = getById(id);
+    @Transactional
+    public SettingDTO update(Long id, SettingDTO settingDTO) {
+        Setting existingSetting = settingRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Setting with id " + id + " not found"));
+        Setting setting = settingMapper.toEntity(settingDTO);
         setting.setId(existingSetting.getId());
-        return settingRepository.save(setting);
+        Setting savedSetting = settingRepository.save(setting);
+        return settingMapper.toDto(savedSetting);
     }
 
     public void delete(Long id) {
-        Setting setting = getById(id);
+        Setting setting = settingRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Setting with id " + id + " not found"));
         settingRepository.delete(setting);
     }
 }
