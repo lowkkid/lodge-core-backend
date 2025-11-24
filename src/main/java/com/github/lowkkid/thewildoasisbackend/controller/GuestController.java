@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/guests")
+@RequestMapping("/guests")
 @AllArgsConstructor
 public class GuestController {
 
