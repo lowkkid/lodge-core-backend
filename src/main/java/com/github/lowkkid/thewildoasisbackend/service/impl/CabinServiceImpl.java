@@ -55,7 +55,8 @@ public class CabinServiceImpl implements CabinService {
         }
         String url = minioService.uploadFile(cabinCreateRequest.getImage(), CABIN_IMAGES_PREFIX + savedCabin.getId());
         savedCabin.setImage(url);
-        return cabinMapper.toDto(cabinRepository.save(savedCabin));
+        // here I don't need to call save() again, because dirty check will reflect changes to database automatically
+        return cabinMapper.toDto(savedCabin);
     }
 
     @Override
