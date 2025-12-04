@@ -25,8 +25,8 @@ public class BookingDTO {
     private Boolean hasBreakfast;
     private Boolean isPaid;
     private String observations;
-    private Long cabinId;
-    private Long guestId;
+    private CabinDTO cabin;
+    private GuestDTO guest;
     private LocalDateTime createdAt;
 }
 

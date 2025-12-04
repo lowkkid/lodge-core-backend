@@ -26,7 +26,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<BookingDTO> getAll() {
-        return bookingRepository.findAll().stream()
+        return bookingRepository.findAllWithCabinsAndGuests().stream()
                 .map(bookingMapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -44,10 +44,10 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingMapper.toEntity(bookingDTO);
         
         // Load Cabin and Guest entities
-        booking.setCabin(cabinRepository.findById(bookingDTO.getCabinId())
-                .orElseThrow(() -> new NotFoundException("Cabin with id " + bookingDTO.getCabinId() + " not found")));
-        booking.setGuest(guestRepository.findById(bookingDTO.getGuestId())
-                .orElseThrow(() -> new NotFoundException("Guest with id " + bookingDTO.getGuestId() + " not found")));
+        booking.setCabin(cabinRepository.findById(bookingDTO.getCabin().getId())
+                .orElseThrow(() -> new NotFoundException("Cabin with id " + bookingDTO.getCabin().getId() + " not found")));
+        booking.setGuest(guestRepository.findById(bookingDTO.getGuest().getId())
+                .orElseThrow(() -> new NotFoundException("Guest with id " + bookingDTO.getGuest().getId() + " not found")));
         
         Booking savedBooking = bookingRepository.save(booking);
         return bookingMapper.toDto(savedBooking);
@@ -63,10 +63,10 @@ public class BookingServiceImpl implements BookingService {
         booking.setId(existingBooking.getId());
         
         // Load Cabin and Guest entities
-        booking.setCabin(cabinRepository.findById(bookingDTO.getCabinId())
-                .orElseThrow(() -> new NotFoundException("Cabin with id " + bookingDTO.getCabinId() + " not found")));
-        booking.setGuest(guestRepository.findById(bookingDTO.getGuestId())
-                .orElseThrow(() -> new NotFoundException("Guest with id " + bookingDTO.getGuestId() + " not found")));
+        booking.setCabin(cabinRepository.findById(bookingDTO.getCabin().getId())
+                .orElseThrow(() -> new NotFoundException("Cabin with id " + bookingDTO.getCabin().getId() + " not found")));
+        booking.setGuest(guestRepository.findById(bookingDTO.getGuest().getId())
+                .orElseThrow(() -> new NotFoundException("Guest with id " + bookingDTO.getGuest().getId() + " not found")));
         
         Booking savedBooking = bookingRepository.save(booking);
         return bookingMapper.toDto(savedBooking);
