@@ -1,6 +1,7 @@
 package com.github.lowkkid.thewildoasisbackend.controller;
 
 import com.github.lowkkid.thewildoasisbackend.dto.BookingDTO;
+import com.github.lowkkid.thewildoasisbackend.repository.projection.BookingSummary;
 import com.github.lowkkid.thewildoasisbackend.service.BookingService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,8 @@ public class BookingController {
     private final BookingService bookingService;
 
     @GetMapping
-    public ResponseEntity<List<BookingDTO>> getAll() {
-        List<BookingDTO> bookings = bookingService.getAll();
+    public ResponseEntity<List<BookingSummary>> getAll() {
+        List<BookingSummary> bookings = bookingService.getAll();
         return ResponseEntity.ok(bookings);
     }
 

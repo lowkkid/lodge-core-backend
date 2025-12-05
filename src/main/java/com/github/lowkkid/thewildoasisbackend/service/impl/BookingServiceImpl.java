@@ -7,6 +7,7 @@ import com.github.lowkkid.thewildoasisbackend.mapper.BookingMapper;
 import com.github.lowkkid.thewildoasisbackend.repository.BookingRepository;
 import com.github.lowkkid.thewildoasisbackend.repository.CabinRepository;
 import com.github.lowkkid.thewildoasisbackend.repository.GuestRepository;
+import com.github.lowkkid.thewildoasisbackend.repository.projection.BookingSummary;
 import com.github.lowkkid.thewildoasisbackend.service.BookingService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,9 @@ public class BookingServiceImpl implements BookingService {
     private final BookingMapper bookingMapper;
 
     @Override
-    public List<BookingDTO> getAll() {
-        return bookingRepository.findAllWithCabinsAndGuests().stream()
-                .map(bookingMapper::toDto)
-                .collect(Collectors.toList());
+    public List<BookingSummary> getAll() {
+        var bookings = bookingRepository.findAllWithCabinsAndGuests();
+        return bookings;
     }
 
     @Override

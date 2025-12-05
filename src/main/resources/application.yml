@@ -12,7 +12,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-    show-sql: ${SHOW_SQL_ENABLED:false}
+    show-sql: ${SHOW_SQL:false}
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yml
