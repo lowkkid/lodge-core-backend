@@ -1,8 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: changeImageTypeCabinsTable
-      author: Vladislav Shikunov
-      changes:
-        - sql:
-            sql: |
-              ALTER TABLE cabins ALTER COLUMN image TYPE TEXT;

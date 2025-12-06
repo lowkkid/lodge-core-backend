@@ -1,6 +1,6 @@
 package com.github.lowkkid.thewildoasisbackend.controller;
 
-import com.github.lowkkid.thewildoasisbackend.dto.SettingDTO;
+import com.github.lowkkid.thewildoasisbackend.model.SettingDTO;
 import com.github.lowkkid.thewildoasisbackend.service.SettingService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

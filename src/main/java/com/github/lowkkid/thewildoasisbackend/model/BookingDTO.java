@@ -1,4 +1,4 @@
-package com.github.lowkkid.thewildoasisbackend.dto;
+package com.github.lowkkid.thewildoasisbackend.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

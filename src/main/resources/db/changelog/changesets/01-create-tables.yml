@@ -1,5 +1,16 @@
 databaseChangeLog:
   - changeSet:
+      id: createCountriesTable
+      author: Vladislav Shikunov
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE countries (
+                id SERIAL PRIMARY KEY ,
+                name VARCHAR(255) NOT NULL UNIQUE,
+                flag TEXT
+              );
+  - changeSet:
       id: createGuestsTable
       author: Vladislav Shikunov
       changes:
@@ -9,10 +20,15 @@ databaseChangeLog:
                 id SERIAL PRIMARY KEY ,
                 full_name VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL UNIQUE,
-                nationality VARCHAR(100),
+                country_id INTEGER,
                 national_id VARCHAR(50) NOT NULL UNIQUE,
-                created_at TIMESTAMP DEFAULT now()
+                created_at TIMESTAMP DEFAULT now(),
+              
+                CONSTRAINT fk_guests_country
+                FOREIGN KEY (country_id) REFERENCES countries(id)
               );
+              
+
   - changeSet:
       id: createCabinsTable
       author: Vladislav Shikunov
@@ -27,7 +43,7 @@ databaseChangeLog:
                 regular_price NUMERIC(7, 2) NOT NULL,
                 discount SMALLINT DEFAULT 0,
                 description TEXT NOT NULL,
-                image BYTEA
+                image TEXT
               );
   - changeSet:
       id: createSettingsTable
@@ -66,7 +82,6 @@ databaseChangeLog:
                 guest_id INTEGER NOT NULL,
                 created_at TIMESTAMP DEFAULT now(),
 
-                -- Правильное объявление Foreign Keys
                 CONSTRAINT fk_bookings_cabin 
                     FOREIGN KEY (cabin_id) REFERENCES cabins(id),
                 CONSTRAINT fk_bookings_guest 

@@ -1,6 +1,6 @@
 package com.github.lowkkid.thewildoasisbackend.service.impl;
 
-import com.github.lowkkid.thewildoasisbackend.dto.GuestDTO;
+import com.github.lowkkid.thewildoasisbackend.model.GuestDTO;
 import com.github.lowkkid.thewildoasisbackend.entity.Guest;
 import com.github.lowkkid.thewildoasisbackend.exception.NotFoundException;
 import com.github.lowkkid.thewildoasisbackend.mapper.GuestMapper;

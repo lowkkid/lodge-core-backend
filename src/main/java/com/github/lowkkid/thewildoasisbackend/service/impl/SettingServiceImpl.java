@@ -1,6 +1,6 @@
 package com.github.lowkkid.thewildoasisbackend.service.impl;
 
-import com.github.lowkkid.thewildoasisbackend.dto.SettingDTO;
+import com.github.lowkkid.thewildoasisbackend.model.SettingDTO;
 import com.github.lowkkid.thewildoasisbackend.entity.Setting;
 import com.github.lowkkid.thewildoasisbackend.exception.NotFoundException;
 import com.github.lowkkid.thewildoasisbackend.mapper.SettingMapper;

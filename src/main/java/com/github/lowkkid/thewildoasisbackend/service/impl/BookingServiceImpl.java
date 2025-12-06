@@ -1,20 +1,21 @@
 package com.github.lowkkid.thewildoasisbackend.service.impl;
 
-import com.github.lowkkid.thewildoasisbackend.dto.BookingDTO;
+import com.github.lowkkid.thewildoasisbackend.model.BookingDTO;
 import com.github.lowkkid.thewildoasisbackend.entity.Booking;
 import com.github.lowkkid.thewildoasisbackend.exception.NotFoundException;
 import com.github.lowkkid.thewildoasisbackend.mapper.BookingMapper;
+import com.github.lowkkid.thewildoasisbackend.model.enums.BookingStatus;
 import com.github.lowkkid.thewildoasisbackend.repository.BookingRepository;
 import com.github.lowkkid.thewildoasisbackend.repository.CabinRepository;
 import com.github.lowkkid.thewildoasisbackend.repository.GuestRepository;
 import com.github.lowkkid.thewildoasisbackend.repository.projection.BookingSummary;
 import com.github.lowkkid.thewildoasisbackend.service.BookingService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -26,8 +27,8 @@ public class BookingServiceImpl implements BookingService {
     private final BookingMapper bookingMapper;
 
     @Override
-    public List<BookingSummary> getAll() {
-        var bookings = bookingRepository.findAllWithCabinsAndGuests();
+    public List<BookingSummary> getAll(BookingStatus status, String sortField, Sort.Direction sortDirection) {
+        var bookings = bookingRepository.findAllWithCabinsAndGuests(status, Sort.by(sortDirection, sortField));
         return bookings;
     }
 

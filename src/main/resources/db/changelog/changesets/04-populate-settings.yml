@@ -1,9 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: populateSettings
-      author: Vladislav Shikunov
-      changes:
-        - sql:
-            sql: |
-              INSERT INTO settings (min_booking_length, max_booking_length, max_guests_per_booking, breakfast_price)
-                VALUES (3, 90, 8, 15.00);

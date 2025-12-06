@@ -1,8 +1,8 @@
 package com.github.lowkkid.thewildoasisbackend.mapper;
 
-import com.github.lowkkid.thewildoasisbackend.dto.CabinCreateRequest;
-import com.github.lowkkid.thewildoasisbackend.dto.CabinDTO;
-import com.github.lowkkid.thewildoasisbackend.dto.CabinEditRequest;
+import com.github.lowkkid.thewildoasisbackend.model.CabinCreateRequest;
+import com.github.lowkkid.thewildoasisbackend.model.CabinDTO;
+import com.github.lowkkid.thewildoasisbackend.model.CabinEditRequest;
 import com.github.lowkkid.thewildoasisbackend.entity.Cabin;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

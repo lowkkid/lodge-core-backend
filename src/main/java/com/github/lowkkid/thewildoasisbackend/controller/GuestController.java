@@ -1,6 +1,6 @@
 package com.github.lowkkid.thewildoasisbackend.controller;
 
-import com.github.lowkkid.thewildoasisbackend.dto.GuestDTO;
+import com.github.lowkkid.thewildoasisbackend.model.GuestDTO;
 import com.github.lowkkid.thewildoasisbackend.service.GuestService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

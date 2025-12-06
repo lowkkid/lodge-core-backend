@@ -1,5 +1,6 @@
 package com.github.lowkkid.thewildoasisbackend.entity;
 
+import com.github.lowkkid.thewildoasisbackend.model.enums.BookingStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -43,7 +44,8 @@ public class Booking {
     private BigDecimal totalPrice;
 
     @Column(nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status;
 
     @Column(name = "has_breakfast", nullable = false)
     private Boolean hasBreakfast;

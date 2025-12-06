@@ -1,4 +1,4 @@
-package com.github.lowkkid.thewildoasisbackend.dto;
+package com.github.lowkkid.thewildoasisbackend.model;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

@@ -1,6 +1,6 @@
 package com.github.lowkkid.thewildoasisbackend.mapper;
 
-import com.github.lowkkid.thewildoasisbackend.dto.BookingDTO;
+import com.github.lowkkid.thewildoasisbackend.model.BookingDTO;
 import com.github.lowkkid.thewildoasisbackend.entity.Booking;
 import com.github.lowkkid.thewildoasisbackend.entity.Cabin;
 import com.github.lowkkid.thewildoasisbackend.entity.Guest;

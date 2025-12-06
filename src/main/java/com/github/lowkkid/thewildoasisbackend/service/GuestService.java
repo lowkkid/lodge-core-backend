@@ -1,6 +1,6 @@
 package com.github.lowkkid.thewildoasisbackend.service;
 
-import com.github.lowkkid.thewildoasisbackend.dto.GuestDTO;
+import com.github.lowkkid.thewildoasisbackend.model.GuestDTO;
 
 import java.util.List;
 

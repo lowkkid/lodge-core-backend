@@ -1,20 +1,182 @@
 databaseChangeLog:
   - changeSet:
+      id: populateCountriesTable
+      author: Vladislav Shikunov
+      changes:
+        - sql:
+            sql: |
+              INSERT INTO countries (name, flag) VALUES
+              ('Portugal', 'https://flagcdn.com/pt.svg'),
+              ('Great Britain', 'https://flagcdn.com/gb.svg'),
+              ('Finland', 'https://flagcdn.com/fi.svg'),
+              ('Germany', 'https://flagcdn.com/de.svg'),
+              ('Bolivia (Plurinational State of)', 'https://flagcdn.com/bo.svg'),
+              ('USA', 'https://flagcdn.com/us.svg'),
+              ('Egypt', 'https://flagcdn.com/eg.svg'),
+              ('Spain', 'https://flagcdn.com/es.svg'),
+              ('China', 'https://flagcdn.com/cn.svg'),
+              ('Sudan', 'https://flagcdn.com/sd.svg'),
+              ('Brazil', 'https://flagcdn.com/br.svg'),
+              ('Mexico', 'https://flagcdn.com/mx.svg'),
+              ('Pakistan', 'https://flagcdn.com/pk.svg'),
+              ('Australia', 'https://flagcdn.com/au.svg'),
+              ('France', 'https://flagcdn.com/fr.svg'),
+              ('India', 'https://flagcdn.com/in.svg'),
+              ('Kuwait', 'https://flagcdn.com/kw.svg'),
+              ('South Africa', 'https://flagcdn.com/za.svg'),
+              ('Japan', 'https://flagcdn.com/jp.svg'),
+              ('Saudi Arabia', 'https://flagcdn.com/sa.svg'),
+              ('Vietnam', 'https://flagcdn.com/vn.svg'),
+              ('South Korea', 'https://flagcdn.com/kr.svg'),
+              ('Colombia', 'https://flagcdn.com/co.svg'),
+              ('Canada', 'https://flagcdn.com/ca.svg'),
+              ('Argentina', 'https://flagcdn.com/ar.svg'),
+              ('Nigeria', 'https://flagcdn.com/ng.svg');
+  - changeSet:
       id: populateCabinsTable
       author: Vladislav Shikunov
       changes:
         - sql:
             sql: |
-              INSERT INTO cabins (name, max_capacity, regular_price, discount, description, image)
-                VALUES ('001', 2, 250.00, 50, 'Small luxury cabin in the woods', NULL);
+              INSERT INTO cabins (name, max_capacity, regular_price, discount, description, image) VALUES
+              ('001', 2, 250.00, 0,
+              'Discover the ultimate luxury getaway for couples in the cozy wooden cabin 001. Nestled in a picturesque 
+              forest, this stunning cabin offers a secluded and intimate retreat. Inside, enjoy modern high-quality 
+              wood interiors, a comfortable seating area, a fireplace and a fully-equipped kitchen. The plush king-size 
+              bed, dressed in fine linens guarantees a peaceful nights sleep. Relax in the spa-like shower and unwind 
+              on the private deck with hot tub.',
+              NULL),
+              ('002', 2, 350.00, 25,
+              'Escape to the serenity of nature and indulge in luxury in our cozy cabin 002. Perfect for couples, this
+              cabin offers a secluded and intimate retreat in the heart of a picturesque forest. Inside, you will find 
+              warm and inviting interiors crafted from high-quality wood, a comfortable living area, a fireplace and 
+              a fully-equipped kitchen. The luxurious bedroom features a plush king-size bed and spa-like shower. 
+              Relax on the private deck with hot tub and take in the beauty of nature.',
+              NULL),
+              ('003', 4, 300.00, 0,
+              'Experience luxury family living in our medium-sized wooden cabin 003. Perfect for families of up 
+              to 4 people, this cabin offers a comfortable and inviting space with all modern amenities. Inside, you 
+              will find warm and inviting interiors crafted from high-quality wood, a comfortable living area, 
+              a fireplace, and a fully-equipped kitchen. The bedrooms feature plush beds and spa-like bathrooms. 
+              The cabin has a private deck with a hot tub and outdoor seating area, perfect for taking in the natural 
+              surroundings.',
+              NULL),
+              ('004', 4, 500.00, 50,
+              'Indulge in the ultimate luxury family vacation in this medium-sized cabin 004. Designed for families 
+              of up to 4, this cabin offers a sumptuous retreat for the discerning traveler. Inside, the cabin boasts 
+              of opulent interiors crafted from the finest quality wood, a comfortable living area, a fireplace, and 
+              a fully-equipped gourmet kitchen. The bedrooms are adorned with plush beds and spa-inspired en-suite 
+              bathrooms. Step outside to your private deck and soak in the natural surroundings while relaxing in your 
+              own hot tub.',
+              NULL),
+              ('005', 6, 350.00, 0,
+              'Enjoy a comfortable and cozy getaway with your group or family in our spacious cabin 005. Designed to 
+              accommodate up to 6 people, this cabin offers a secluded retreat in the heart of nature. Inside, 
+              the cabin features warm and inviting interiors crafted from quality wood, a living area with fireplace, 
+              and a fully-equipped kitchen. The bedrooms are comfortable and equipped with en-suite bathrooms. Step 
+              outside to your private deck and take in the natural surroundings while relaxing in your own hot tub.',
+              NULL),
+              ('006', 6, 800.00, 100,
+              'Experience the epitome of luxury with your group or family in our spacious wooden cabin 006. Designed 
+              to comfortably accommodate up to 6 people, this cabin offers a lavish retreat in the heart of nature. 
+              Inside, the cabin features opulent interiors crafted from premium wood, a grand living area with 
+              fireplace, and a fully-equipped gourmet kitchen. The bedrooms are adorned with plush beds and spa-like 
+              en-suite bathrooms. Step outside to your private deck and soak in the natural surroundings while relaxing 
+              in your own hot tub.',
+              NULL),
+              ('007', 8, 600.00, 100,
+              'Accommodate your large group or multiple families in the spacious and grand wooden cabin 007. Designed 
+              to comfortably fit up to 8 people, this cabin offers a secluded retreat in the heart of beautiful forests
+              and mountains. Inside, the cabin features warm and inviting interiors crafted from quality wood, 
+              multiple living areas with fireplace, and a fully-equipped kitchen. The bedrooms are comfortable and 
+              equipped with en-suite bathrooms. The cabin has a private deck with a hot tub and outdoor seating area, 
+              perfect for taking in the natural surroundings.',
+              NULL),
+              ('008', 10, 1400.00, 0,
+              'Experience the epitome of luxury and grandeur with your large group or multiple families in our grand
+              cabin 008. This cabin offers a lavish retreat that caters to all your needs and desires. The cabin 
+              features an opulent design and boasts of high-end finishes, intricate details and the finest quality 
+              wood throughout. Inside, the cabin features multiple grand living areas with fireplaces, a formal dining 
+              area, and a gourmet kitchen that is a chef''s dream. The bedrooms are designed for ultimate comfort and 
+              luxury, with plush beds and en-suite spa-inspired bathrooms. Step outside and immerse yourself in the 
+              beauty of nature from your private deck, featuring a luxurious hot tub and ample seating areas for 
+              ultimate relaxation and enjoyment.',
+              NULL);
   - changeSet:
       id: populateGuestsTable
       author: Vladislav Shikunov
       changes:
         - sql:
             sql: |
-              INSERT INTO guests (full_name, email, nationality, national_id)
-              VALUES ('Vladislav Shikunov', 'lowkkid@example.com', 'belarusian', 'AB1234567');
+              INSERT INTO guests (full_name, email, country_id, national_id) VALUES
+              ('João Silva', 'joao.silva@example.com', 1, 'PT123456789'),
+              ('Maria Santos', 'maria.santos@example.com', 1, 'PT987654321'),
+              ('Carlos Oliveira', 'carlos.oliveira@example.com', 1, 'PT456789123'),
+              ('Oliver Johnson', 'oliver.johnson@example.com', 2, 'GB123456789'),
+              ('Charlotte Williams', 'charlotte.williams@example.com', 2, 'GB987654321'),
+              ('Mika Hakkinen', 'mika.hakkinen@example.com', 3, 'FI123456789'),
+              ('Emma Korhonen', 'emma.korhonen@example.com', 3, 'FI987654321'),
+              ('Hans Müller', 'hans.muller@example.com', 4, 'DE123456789'),
+              ('Sophie Schmidt', 'sophie.schmidt@example.com', 4, 'DE987654321'),
+              ('Lukas Fischer', 'lukas.fischer@example.com', 4, 'DE456789123'),
+              ('Carlos Mamani', 'carlos.mamani@example.com', 5, 'BO123456789'),
+              ('Maria Quispe', 'maria.quispe@example.com', 5, 'BO987654321'),
+              ('Michael Smith', 'michael.smith@example.com', 6, 'US123456789'),
+              ('Jennifer Davis', 'jennifer.davis@example.com', 6, 'US987654321'),
+              ('Robert Wilson', 'robert.wilson@example.com', 6, 'US456789123'),
+              ('Mohamed Ali', 'mohamed.ali@example.com', 7, 'EG123456789'),
+              ('Fatima Hassan', 'fatima.hassan@example.com', 7, 'EG987654321'),
+              ('Antonio García', 'antonio.garcia@example.com', 8, 'ES123456789'),
+              ('Isabel Rodríguez', 'isabel.rodriguez@example.com', 8, 'ES987654321'),
+              ('Javier López', 'javier.lopez@example.com', 8, 'ES456789123'),
+              ('Wei Zhang', 'wei.zhang@example.com', 9, 'CN123456789'),
+              ('Li Wang', 'li.wang@example.com', 9, 'CN987654321'),
+              ('Mei Chen', 'mei.chen@example.com', 9, 'CN456789123'),
+              ('Ahmed Ibrahim', 'ahmed.ibrahim@example.com', 10, 'SD123456789'),
+              ('Aisha Mohamed', 'aisha.mohamed@example.com', 10, 'SD987654321'),
+              ('Pedro Santos', 'pedro.santos@example.com', 11, 'BR123456789'),
+              ('Ana Silva', 'ana.silva@example.com', 11, 'BR987654321'),
+              ('Juan Hernández', 'juan.hernandez@example.com', 12, 'MX123456789'),
+              ('Sofia González', 'sofia.gonzalez@example.com', 12, 'MX987654321'),
+              ('Diego Rodríguez', 'diego.rodriguez@example.com', 12, 'MX456789123'),
+              ('Ali Khan', 'ali.khan@example.com', 13, 'PK123456789'),
+              ('Saima Ahmed', 'saima.ahmed@example.com', 13, 'PK987654321'),
+              ('Jack Thompson', 'jack.thompson@example.com', 14, 'AU123456789'),
+              ('Olivia Wilson', 'olivia.wilson@example.com', 14, 'AU987654321'),
+              ('Noah Brown', 'noah.brown@example.com', 14, 'AU456789123'),
+              ('Pierre Dubois', 'pierre.dubois@example.com', 15, 'FR123456789'),
+              ('Marie Laurent', 'marie.laurent@example.com', 15, 'FR987654321'),
+              ('Thomas Moreau', 'thomas.moreau@example.com', 15, 'FR456789123'),
+              ('Raj Patel', 'raj.patel@example.com', 16, 'IN123456789'),
+              ('Priya Sharma', 'priya.sharma@example.com', 16, 'IN987654321'),
+              ('Amit Kumar', 'amit.kumar@example.com', 16, 'IN456789123'),
+              ('Khalid Al-Mohammed', 'khalid.almohammed@example.com', 17, 'KW123456789'),
+              ('Noura Al-Sabah', 'noura.alsabah@example.com', 17, 'KW987654321'),
+              ('Thabo Mbeki', 'thabo.mbeki@example.com', 18, 'ZA123456789'),
+              ('Nomsa Zulu', 'nomsa.zulu@example.com', 18, 'ZA987654321'),
+              ('Sipho Ndlovu', 'sipho.ndlovu@example.com', 18, 'ZA456789123'),
+              ('Yuki Tanaka', 'yuki.tanaka@example.com', 19, 'JP123456789'),
+              ('Hiroshi Sato', 'hiroshi.sato@example.com', 19, 'JP987654321'),
+              ('Aiko Yamamoto', 'aiko.yamamoto@example.com', 19, 'JP456789123'),
+              ('Abdullah Al-Saud', 'abdullah.alsaud@example.com', 20, 'SA123456789'),
+              ('Sarah Al-Rashid', 'sarah.alrashid@example.com', 20, 'SA987654321'),
+              ('Minh Nguyen', 'minh.nguyen@example.com', 21, 'VN123456789'),
+              ('Lan Tran', 'lan.tran@example.com', 21, 'VN987654321'),
+              ('Huy Pham', 'huy.pham@example.com', 21, 'VN456789123'),
+              ('Min-ho Kim', 'minho.kim@example.com', 22, 'KR123456789'),
+              ('Ji-eun Park', 'jieun.park@example.com', 22, 'KR987654321'),
+              ('Seung-hyun Lee', 'seunghyun.lee@example.com', 22, 'KR456789123'),
+              ('Carlos Ramirez', 'carlos.ramirez@example.com', 23, 'CO123456789'),
+              ('Camila Rodríguez', 'camila.rodriguez@example.com', 23, 'CO987654321'),
+              ('Liam Tremblay', 'liam.tremblay@example.com', 24, 'CA123456789'),
+              ('Emma Martin', 'emma.martin@example.com', 24, 'CA987654321'),
+              ('Noah Gagnon', 'noah.gagnon@example.com', 24, 'CA456789123'),
+              ('Diego González', 'diego.gonzalez@example.com', 25, 'AR123456789'),
+              ('Valentina López', 'valentina.lopez@example.com', 25, 'AR987654321'),
+              ('Juan Pérez', 'juan.perez@example.com', 25, 'AR456789123'),
+              ('Chinedu Okeke', 'chinedu.okeke@example.com', 26, 'NG123456789'),
+              ('Aisha Adebayo', 'aisha.adebayo@example.com', 26, 'NG987654321'),
+              ('Emeka Okafor', 'emeka.okafor@example.com', 26, 'NG456789123');
   - changeSet:
       id: populateSettingsTable
       author: Vladislav Shikunov
@@ -30,31 +192,70 @@ databaseChangeLog:
         - sql:
             sql: |
               INSERT INTO bookings (
-                  start_date, 
-                  end_date, 
-                  num_nights, 
-                  num_guests, 
+                  created_at,
+                  start_date,
+                  end_date,
+                  cabin_id,
+                  guest_id,
+                  has_breakfast,
+                  observations,
+                  is_paid,
+                  num_guests,
+                  num_nights,
                   cabin_price,
                   extras_price,
-                  total_price, 
-                  status, 
-                  has_breakfast, 
-                  is_paid, 
-                  observations, 
-                  cabin_id, 
-                  guest_id
-              ) VALUES (
-                  '2025-12-01 14:00:00',
-                  '2025-12-05 12:00:00',
-                  4,
-                  2,
-                  300.00,
-                  30.00,
-                  330.00,
-                  'unconfirmed',
-                  true,
-                  true,
-                  'Early check-in requested',
-                  1,
-                  1
-              );
+                  total_price,
+                  status
+              ) VALUES
+                  ('2025-11-16 14:30:00', '2025-12-06', '2025-12-13', 1, 2, true,
+                   'I have a gluten allergy and would like to request a gluten-free breakfast.',
+                   false, 1, 7, 250.00, 15.00, 1765.00, 'UNCONFIRMED'),
+                  ('2025-11-03 10:15:00', '2025-11-13', '2025-11-23', 1, 3, true,
+                   '', true, 2, 10, 250.00, 30.00, 2530.00, 'CHECKED_OUT'),
+                  ('2025-11-09 16:45:00', '2025-12-18', '2025-12-24', 1, 4, false,
+                   '', true, 2, 6, 250.00, 0.00, 1500.00, 'UNCONFIRMED'),
+                  ('2025-10-22 09:20:00', '2025-10-22', '2025-11-07', 2, 5, false,
+                   '', true, 2, 16, 325.00, 0.00, 5200.00, 'CHECKED_OUT'),
+                  ('2025-12-04 18:30:00', '2025-12-21', '2025-12-24', 2, 6, true,
+                   '', false, 2, 3, 325.00, 30.00, 1005.00, 'UNCONFIRMED'),
+                  ('2025-12-01 11:45:00', '2026-01-08', '2026-01-23', 2, 7, true,
+                   '', false, 2, 15, 325.00, 30.00, 4905.00, 'UNCONFIRMED'),
+                  ('2025-10-02 13:10:00', '2025-11-11', '2025-11-16', 3, 8, true,
+                   '', true, 4, 5, 300.00, 60.00, 1560.00, 'CHECKED_OUT'),
+                  ('2025-12-04 20:00:00', '2025-12-04', '2025-12-06', 3, 9, false,
+                   'We will be bringing our small dog with us', true, 3, 2, 300.00, 0.00, 600.00, 'CHECKED_IN'),
+                  ('2025-11-22 14:25:00', '2025-11-22', '2025-11-25', 3, 10, true,
+                   '', true, 4, 3, 300.00, 60.00, 960.00, 'CHECKED_OUT'),
+                  ('2025-11-06 12:15:00', '2025-12-02', '2025-12-14', 4, 11, true,
+                   '', true, 4, 12, 450.00, 60.00, 5460.00, 'UNCONFIRMED'),
+                  ('2025-12-05 09:45:00', '2025-12-18', '2025-12-23', 4, 12, true,
+                   '', true, 4, 5, 450.00, 60.00, 2310.00, 'UNCONFIRMED'),
+                  ('2025-12-03 17:30:00', '2025-12-24', '2025-12-25', 4, 13, false,
+                   '', true, 1, 1, 450.00, 0.00, 450.00, 'UNCONFIRMED'),
+                  ('2025-12-06 10:00:00', '2025-12-20', '2025-12-27', 5, 14, true,
+                   '', false, 5, 7, 350.00, 75.00, 2525.00, 'UNCONFIRMED'),
+                  ('2025-11-30 15:20:00', '2025-11-30', '2025-12-02', 5, 15, true,
+                   '', true, 4, 2, 350.00, 60.00, 760.00, 'CHECKED_OUT'),
+                  ('2025-12-02 08:45:00', '2025-12-02', '2025-12-05', 5, 16, false,
+                   '', true, 6, 3, 350.00, 0.00, 1050.00, 'CHECKED_OUT'),
+                  ('2025-12-03 22:10:00', '2025-12-06', '2025-12-17', 6, 17, false,
+                   'We will be checking in late, around midnight. Hope that''s okay :)',
+                   true, 6, 11, 700.00, 0.00, 7700.00, 'CHECKED_IN'),
+                  ('2025-11-20 11:30:00', '2025-11-20', '2025-11-27', 6, 18, true,
+                   'I will need a rollaway bed for one of the guests', true, 4, 7, 700.00, 60.00, 4960.00, 'CHECKED_OUT'),
+                  ('2025-11-18 16:50:00', '2025-12-02', '2025-12-05', 6, 19, true,
+                   '', true, 6, 3, 700.00, 90.00, 2190.00, 'CHECKED_OUT'),
+                  ('2025-12-04 19:15:00', '2025-12-23', '2025-12-29', 7, 20, false,
+                   '', false, 8, 6, 500.00, 0.00, 3000.00, 'UNCONFIRMED'),
+                  ('2025-11-29 13:40:00', '2026-01-15', '2026-01-25', 7, 21, true,
+                   '', true, 7, 10, 500.00, 105.00, 5105.00, 'UNCONFIRMED'),
+                  ('2025-10-12 10:25:00', '2026-01-07', '2026-01-12', 7, 22, true,
+                   '', true, 6, 5, 500.00, 90.00, 2590.00, 'UNCONFIRMED'),
+                  ('2025-11-28 08:30:00', '2025-12-01', '2025-12-06', 8, 1, true,
+                   'My wife has a gluten allergy so I would like to request a gluten-free breakfast if possible',
+                   true, 9, 5, 1400.00, 135.00, 7135.00, 'CHECKED_IN'),
+                  ('2025-12-06 12:00:00', '2025-12-06', '2025-12-11', 8, 23, true,
+                   'I am celebrating my anniversary, can you arrange for any special amenities or decorations?',
+                   true, 10, 5, 1400.00, 150.00, 7150.00, 'CHECKED_IN'),
+                  ('2025-11-26 14:15:00', '2025-12-16', '2025-12-19', 8, 24, false,
+                   '', false, 7, 3, 1400.00, 0.00, 4200.00, 'UNCONFIRMED');
