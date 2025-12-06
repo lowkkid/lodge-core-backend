@@ -11,11 +11,11 @@ import com.github.lowkkid.thewildoasisbackend.repository.GuestRepository;
 import com.github.lowkkid.thewildoasisbackend.repository.projection.BookingSummary;
 import com.github.lowkkid.thewildoasisbackend.service.BookingService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -27,8 +27,10 @@ public class BookingServiceImpl implements BookingService {
     private final BookingMapper bookingMapper;
 
     @Override
-    public List<BookingSummary> getAll(BookingStatus status, String sortField, Sort.Direction sortDirection) {
-        return bookingRepository.findAllWithCabinsAndGuests(status, Sort.by(sortDirection, sortField));
+    public Page<BookingSummary> getAll(BookingStatus status, Integer pageNumber, Integer pageSize, String sortField, Sort.Direction sortDirection) {
+
+        return bookingRepository.findAllWithCabinsAndGuests(
+                status, PageRequest.of(pageNumber, pageSize, Sort.by(sortDirection, sortField)));
     }
 
     @Override
@@ -42,13 +44,13 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public BookingDTO create(BookingDTO bookingDTO) {
         Booking booking = bookingMapper.toEntity(bookingDTO);
-        
+
         // Load Cabin and Guest entities
         booking.setCabin(cabinRepository.findById(bookingDTO.getCabin().getId())
                 .orElseThrow(() -> new NotFoundException("Cabin with id " + bookingDTO.getCabin().getId() + " not found")));
         booking.setGuest(guestRepository.findById(bookingDTO.getGuest().getId())
                 .orElseThrow(() -> new NotFoundException("Guest with id " + bookingDTO.getGuest().getId() + " not found")));
-        
+
         Booking savedBooking = bookingRepository.save(booking);
         return bookingMapper.toDto(savedBooking);
     }
@@ -58,16 +60,16 @@ public class BookingServiceImpl implements BookingService {
     public BookingDTO update(Long id, BookingDTO bookingDTO) {
         Booking existingBooking = bookingRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Booking with id " + id + " not found"));
-        
+
         Booking booking = bookingMapper.toEntity(bookingDTO);
         booking.setId(existingBooking.getId());
-        
+
         // Load Cabin and Guest entities
         booking.setCabin(cabinRepository.findById(bookingDTO.getCabin().getId())
                 .orElseThrow(() -> new NotFoundException("Cabin with id " + bookingDTO.getCabin().getId() + " not found")));
         booking.setGuest(guestRepository.findById(bookingDTO.getGuest().getId())
                 .orElseThrow(() -> new NotFoundException("Guest with id " + bookingDTO.getGuest().getId() + " not found")));
-        
+
         Booking savedBooking = bookingRepository.save(booking);
         return bookingMapper.toDto(savedBooking);
     }

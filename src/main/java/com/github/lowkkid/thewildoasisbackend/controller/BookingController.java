@@ -5,12 +5,11 @@ import com.github.lowkkid.thewildoasisbackend.model.enums.BookingStatus;
 import com.github.lowkkid.thewildoasisbackend.repository.projection.BookingSummary;
 import com.github.lowkkid.thewildoasisbackend.service.BookingService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/bookings")
@@ -20,10 +19,12 @@ public class BookingController {
     private final BookingService bookingService;
 
     @GetMapping
-    public ResponseEntity<List<BookingSummary>> getAll(@RequestParam(required = false) BookingStatus status,
+    public ResponseEntity<Page<BookingSummary>> getAll(@RequestParam(required = false) BookingStatus status,
+                                                       @RequestParam(defaultValue = "1") Integer pageNumber,
+                                                       @RequestParam(defaultValue = "10" ) Integer pageSize,
                                                        @RequestParam(defaultValue = "startDate") String sortField,
                                                        @RequestParam(defaultValue = "DESC") Sort.Direction sortDirection) {
-        List<BookingSummary> bookings = bookingService.getAll(status, sortField, sortDirection);
+        var bookings = bookingService.getAll(status, pageNumber, pageSize, sortField, sortDirection);
         return ResponseEntity.ok(bookings);
     }
 

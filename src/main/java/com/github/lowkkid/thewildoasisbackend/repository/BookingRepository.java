@@ -3,11 +3,11 @@ package com.github.lowkkid.thewildoasisbackend.repository;
 import com.github.lowkkid.thewildoasisbackend.entity.Booking;
 import com.github.lowkkid.thewildoasisbackend.model.enums.BookingStatus;
 import com.github.lowkkid.thewildoasisbackend.repository.projection.BookingSummary;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
@@ -17,6 +17,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "c.name, g.fullName, g.email)  " +
             "FROM Booking b JOIN b.cabin c JOIN b.guest g " +
             "WHERE (:status IS NULL OR b.status = :status)")
-    List<BookingSummary> findAllWithCabinsAndGuests(BookingStatus status, Sort sort);
+    Page<BookingSummary> findAllWithCabinsAndGuests(BookingStatus status, Pageable pageable);
 }
 
