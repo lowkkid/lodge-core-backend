@@ -30,7 +30,7 @@ public class BookingServiceImpl implements BookingService {
     public Page<BookingSummary> getAll(BookingStatus status, Integer pageNumber, Integer pageSize, String sortField, Sort.Direction sortDirection) {
 
         return bookingRepository.findAllWithCabinsAndGuests(
-                status, PageRequest.of(pageNumber, pageSize, Sort.by(sortDirection, sortField)));
+                status, PageRequest.of(--pageNumber, pageSize, Sort.by(sortDirection, sortField)));
     }
 
     @Override
