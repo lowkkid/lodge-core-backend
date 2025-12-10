@@ -79,6 +79,7 @@ public class CabinServiceImpl implements CabinService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         Cabin cabin = cabinRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Cabin with id " + id + " not found"));
