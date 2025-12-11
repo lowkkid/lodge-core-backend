@@ -34,10 +34,22 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional
     public BookingDTO getById(Long id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Booking with id " + id + " not found"));
         return bookingMapper.toDto(booking);
+    }
+
+    @Override
+    @Transactional
+    public void checkin(Long id) {
+        bookingRepository.checkin(id);
+    }
+
+    @Override
+    public void checkout(Long id) {
+        bookingRepository.checkout(id);
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -25,5 +26,13 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @NotNull
     @Query("SELECT b FROM Booking b JOIN FETCH b.cabin c JOIN FETCH b.guest g JOIN FETCH g.country cn WHERE b.id=:id")
     Optional<Booking> findById(@NotNull Long id);
+
+    @Modifying
+    @Query("UPDATE Booking b set b.status = 'CHECKED_IN', b.isPaid = true WHERE b.id = :id")
+    void checkin(Long id);
+
+    @Modifying
+    @Query("UPDATE Booking b set b.status = 'CHECKED_OUT' WHERE b.id = :id")
+    void checkout(Long id);
 }
 

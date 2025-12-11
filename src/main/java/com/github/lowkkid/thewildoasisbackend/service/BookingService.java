@@ -12,6 +12,10 @@ public interface BookingService {
 
     BookingDTO getById(Long id);
 
+    void checkin(Long id);
+
+    void checkout(Long id);
+
     BookingDTO create(BookingDTO bookingDTO);
 
     BookingDTO update(Long id, BookingDTO bookingDTO);

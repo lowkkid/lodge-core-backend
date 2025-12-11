@@ -34,6 +34,18 @@ public class BookingController {
         return ResponseEntity.ok(booking);
     }
 
+    @PatchMapping("/{id}/checkin")
+    public ResponseEntity<Void> checkin(@PathVariable Long id) {
+        bookingService.checkin(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/checkout")
+    public ResponseEntity<Void> checkout(@PathVariable Long id) {
+        bookingService.checkout(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping
     public ResponseEntity<BookingDTO> create(@RequestBody BookingDTO bookingDTO) {
         BookingDTO createdBooking = bookingService.create(bookingDTO);
