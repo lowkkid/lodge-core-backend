@@ -62,6 +62,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
                 .secure(true)
                 .sameSite("None")
                 .partitioned(true)
+                .path("/")
                 .maxAge(tokenExpirationTimeUtils.getRefreshTokenExpirationTimeSec(issuedAt))
                 .build();
         response.addHeader(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString());
@@ -108,6 +109,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
                 .httpOnly(true)
                 .secure(true)
                 .partitioned(true)
+                .path("/")
                 .sameSite("None")
                 .maxAge(tokenExpirationTimeUtils.getRefreshTokenExpirationTimeSec(issuedAt))
                 .build();
