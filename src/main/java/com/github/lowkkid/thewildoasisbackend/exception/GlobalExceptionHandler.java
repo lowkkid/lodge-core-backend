@@ -51,8 +51,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleNotFoundException(Exception ex) {
-        logException(ex);
+    public ResponseEntity<String> handleException(Exception ex) {
+        log.error(INTERNAL_SERVER_ERROR, ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(INTERNAL_SERVER_ERROR);
     }
 
@@ -73,10 +73,6 @@ public class GlobalExceptionHandler {
         } else {
             log.warn("{} at {}", ex.getMessage(), location);
         }
-    }
-
-    private void logException(Exception ex) {
-        logException(null, ex);
     }
 }
 

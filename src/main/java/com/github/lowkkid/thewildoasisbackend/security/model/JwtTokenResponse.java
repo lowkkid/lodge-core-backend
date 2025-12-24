@@ -2,9 +2,7 @@ package com.github.lowkkid.thewildoasisbackend.security.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public record TokensResponse(
+public record JwtTokenResponse(
         @Schema(description = "JWT access token")
-        String jwtToken,
-        @Schema(description = "Refresh token")
-        String refreshToken
+        String jwtToken
 ) {}

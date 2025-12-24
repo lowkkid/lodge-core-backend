@@ -1,12 +1,12 @@
 package com.github.lowkkid.thewildoasisbackend.security.service.impl;
 
-import com.github.lowkkid.thewildoasisbackend.security.model.TokensResponse;
+import com.github.lowkkid.thewildoasisbackend.security.model.JwtTokenResponse;
 import com.github.lowkkid.thewildoasisbackend.security.model.UsernameAndPassword;
 import com.github.lowkkid.thewildoasisbackend.security.model.UserDetailsImpl;
-import com.github.lowkkid.thewildoasisbackend.security.model.RefreshRequest;
 import com.github.lowkkid.thewildoasisbackend.security.service.AuthService;
 import com.github.lowkkid.thewildoasisbackend.security.service.JwtService;
 import com.github.lowkkid.thewildoasisbackend.security.service.RefreshTokenService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +23,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
-    public TokensResponse login(UsernameAndPassword usernameAndPassword) {
+    public JwtTokenResponse login(UsernameAndPassword usernameAndPassword, HttpServletResponse response) {
         var username = usernameAndPassword.username();
         var password = usernameAndPassword.password();
 
@@ -33,19 +33,19 @@ public class AuthServiceImpl implements AuthService {
 
         var userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        String jwt = jwtService.generateToken(userDetails);
-        String refreshToken = refreshTokenService.generateRefreshToken(userDetails.getUserId());
+        String jwt = jwtService.generate(userDetails);
+        refreshTokenService.generate(userDetails.getUserId(), response);
 
-
-        return new TokensResponse(jwt, refreshToken);
+        return new JwtTokenResponse(jwt);
     }
 
     @Override
     @Transactional
-    public TokensResponse refreshToken(RefreshRequest refreshRequest) {
-        var newRefreshToken = refreshTokenService.refresh(refreshRequest);
-        var newJwtToken = jwtService.generateToken(refreshRequest.userDetails());
+    public JwtTokenResponse refresh(String refreshToken, HttpServletResponse response) {
+        var newRefreshToken = refreshTokenService.refresh(refreshToken, response);
+        var user = newRefreshToken.getUser();
+        var newJwtToken = jwtService.generate(user.getId(), user.getRole(), user.getUsername());
 
-        return new TokensResponse(newJwtToken, newRefreshToken);
+        return new JwtTokenResponse(newJwtToken);
     }
 }

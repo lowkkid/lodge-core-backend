@@ -19,7 +19,7 @@ databaseChangeLog:
         - sql:
             sql: |
               CREATE TABLE refresh_tokens (
-                id SERIAL PRIMARY KEY,
+                id UUID PRIMARY KEY,
                 token_hash VARCHAR(255) NOT NULL UNIQUE,  
                 user_id UUID NOT NULL,
                 issued_at TIMESTAMP DEFAULT now(),

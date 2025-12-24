@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
@@ -34,6 +35,10 @@ public final class TokenExpirationTimeUtils {
 
     public LocalDateTime getRefreshTokenExpirationTime(LocalDateTime issuedAt) {
         return issuedAt.plus(refreshTokenExpirationTime, refreshTokenExpirationTimeUnit);
+    }
+
+    public long getRefreshTokenExpirationTimeSec(LocalDateTime issuedAt) {
+        return getRefreshTokenAbsoluteExpirationTime(issuedAt).toEpochSecond(ZoneOffset.UTC);
     }
 
     public LocalDateTime getRefreshTokenAbsoluteExpirationTime(LocalDateTime issuedAt) {

@@ -28,7 +28,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String generateToken(UUID userId, UserRole role, String username) {
+    public String generate(UUID userId, UserRole role, String username) {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", role);
         extraClaims.put("username", username);
@@ -43,12 +43,12 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String generateToken(UserDetailsImpl userDetails) {
-        return generateToken(userDetails.getUserId(), userDetails.getRole(), userDetails.getUsername());
+    public String generate(UserDetailsImpl userDetails) {
+        return generate(userDetails.getUserId(), userDetails.getRole(), userDetails.getUsername());
     }
 
     @Override
-    public JwtValidationResult validateToken(String token) {
+    public JwtValidationResult validate(String token) {
         try {
             Claims claims = extractAllClaims(token);
             return claims.getExpiration().before(new Date()) ? JwtValidationResult.EXPIRED : JwtValidationResult.SUCCESS;
@@ -61,15 +61,12 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public Claims extractAllClaims(String token) {
-        try {
-            return Jwts.parser()
-                    .verifyWith(getSigningKey())
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload();
-        } catch (ExpiredJwtException e) {
-            return e.getClaims();
-        }
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
     }
 
     /*

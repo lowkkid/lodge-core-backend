@@ -9,11 +9,11 @@ import java.util.UUID;
 
 public interface JwtService {
 
-    String generateToken(UUID userId, UserRole role, String username);
+    String generate(UUID userId, UserRole role, String username);
 
-    String generateToken(UserDetailsImpl userDetails);
+    String generate(UserDetailsImpl userDetails);
 
-    JwtValidationResult validateToken(String token);
+    JwtValidationResult validate(String token);
 
     Claims extractAllClaims(String token);
 }

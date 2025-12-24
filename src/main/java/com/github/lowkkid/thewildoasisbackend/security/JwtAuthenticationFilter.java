@@ -45,7 +45,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwt = authHeader.substring(BEARER_PREFIX.length());
 
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            var jwtValidationResult = jwtService.validateToken(jwt);
+            var jwtValidationResult = jwtService.validate(jwt);
 
             if (jwtValidationResult == JwtValidationResult.SUCCESS) {
                 var claims = jwtService.extractAllClaims(jwt);
