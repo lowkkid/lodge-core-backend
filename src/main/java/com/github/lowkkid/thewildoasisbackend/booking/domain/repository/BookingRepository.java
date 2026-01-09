@@ -30,8 +30,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query("SELECT new com.github.lowkkid.thewildoasisbackend.booking.model.DailyBookingSales(" +
         "b.paidAt, SUM(b.totalPrice), SUM(b.extrasPrice)) " +
         "FROM Booking b " +
-        "WHERE (b.createdAt BETWEEN :start AND :end) " +
-        "AND b.isPaid=true " +
+        "WHERE (b.paidAt BETWEEN :start AND :end) " +
         "GROUP BY b.paidAt"
     )
     List<DailyBookingSales> findDailySalesBetweenDates(LocalDateTime start, LocalDateTime end);
