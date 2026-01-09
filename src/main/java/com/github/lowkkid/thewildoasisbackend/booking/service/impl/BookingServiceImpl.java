@@ -16,7 +16,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -36,13 +37,17 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<DailyBookingSales> getSalesBetweenDates(LocalDateTime start, LocalDateTime end) {
-        return bookingRepository.findDailySalesBetweenDates(start, end);
+    public List<DailyBookingSales> getSalesBetweenDates(LocalDate start, LocalDate end) {
+        var startDateTime = start.atStartOfDay();
+        var endDateTime = end.atTime(LocalTime.MAX);
+        return bookingRepository.findDailySalesBetweenDates(startDateTime, endDateTime);
     }
 
     @Override
-    public List<StaySummary> getStaySummariesBetweenDates(LocalDateTime start, LocalDateTime end) {
-        return bookingRepository.findAllStaysByStartDateBetween(start, end);
+    public List<StaySummary> getStaySummariesBetweenDates(LocalDate start, LocalDate end) {
+        var startDateTime = start.atStartOfDay();
+        var endDateTime = end.atTime(LocalTime.MAX);
+        return bookingRepository.findAllStaysByStartDateBetween(startDateTime, endDateTime);
     }
 
     @Override
