@@ -20,26 +20,40 @@ import java.util.Optional;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    @Query("SELECT new com.github.lowkkid.thewildoasisbackend.booking.model.BookingSummary(" +
-            "b.id, b.createdAt, b.startDate, b.endDate, b.numNights, b.numGuests, b.status, b.totalPrice, " +
-            "c.name, g.fullName, g.email)  " +
-            "FROM Booking b JOIN b.cabin c JOIN b.guest g " +
-            "WHERE (:status IS NULL OR b.status = :status)")
+    @Query("""
+    SELECT new com.github.lowkkid.thewildoasisbackend.booking.model.BookingSummary(
+        b.id, b.createdAt, b.startDate, b.endDate, b.numNights, b.numGuests,
+        b.status, b.totalPrice, c.name, g.fullName, g.email
+    )
+    FROM Booking b
+    JOIN b.cabin c
+    JOIN b.guest g
+    WHERE (:status IS NULL OR b.status = :status)
+    """)
     Page<BookingSummary> findAllWithCabinsAndGuests(BookingStatus status, Pageable pageable);
 
-    @Query("SELECT new com.github.lowkkid.thewildoasisbackend.booking.model.DailyBookingSales(" +
-            "CAST(b.paidAt AS localdate), SUM(b.totalPrice), SUM(b.extrasPrice)) " +
-            "FROM Booking b " +
-            "WHERE (b.paidAt BETWEEN :start AND :end) " +
-            "GROUP BY CAST(b.paidAt AS localdate)"
+    @Query("""
+    SELECT new com.github.lowkkid.thewildoasisbackend.booking.model.DailyBookingSales(
+        CAST(b.paidAt AS localdate), SUM(b.totalPrice), SUM(b.extrasPrice)
     )
+    FROM Booking b
+    WHERE b.paidAt BETWEEN :start AND :end
+    GROUP BY CAST(b.paidAt AS localdate)
+    ORDER BY CAST(b.paidAt AS localdate) ASC
+    """)
     List<DailyBookingSales> findDailySalesBetweenDates(LocalDateTime start, LocalDateTime end);
 
-    @Query("SELECT new com.github.lowkkid.thewildoasisbackend.booking.model.StaySummary(" +
-            "b.id, b.createdAt, b.startDate, b.endDate, b.numNights, b.numGuests, b.status, " +
-            "b.totalPrice, b.extrasPrice, b.cabinPrice, g.fullName)" +
-            "FROM Booking b JOIN b.guest g " +
-            "WHERE b.startDate BETWEEN :start AND :end")
+    int countBookingsByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
+
+    @Query("""
+    SELECT new com.github.lowkkid.thewildoasisbackend.booking.model.StaySummary(
+        b.id, b.createdAt, b.startDate, b.endDate, b.numNights, b.numGuests,
+        b.status, b.totalPrice, b.extrasPrice, b.cabinPrice, g.fullName
+    )
+    FROM Booking b
+    JOIN b.guest g
+    WHERE b.startDate BETWEEN :start AND :end
+    """)
     List<StaySummary> findAllStaysByStartDateBetween(LocalDateTime start, LocalDateTime end);
 
     @NotNull

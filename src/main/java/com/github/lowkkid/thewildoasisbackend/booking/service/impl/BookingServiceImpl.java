@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -40,7 +42,21 @@ public class BookingServiceImpl implements BookingService {
     public List<DailyBookingSales> getSalesBetweenDates(LocalDate start, LocalDate end) {
         var startDateTime = start.atStartOfDay();
         var endDateTime = end.atTime(LocalTime.MAX);
-        return bookingRepository.findDailySalesBetweenDates(startDateTime, endDateTime);
+        var nonZeroSales = bookingRepository.findDailySalesBetweenDates(startDateTime, endDateTime);
+        var nonZeroSalesByDateMap  = nonZeroSales.stream()
+                .collect(Collectors.toMap(DailyBookingSales::date, Function.identity()));
+
+
+        return start.datesUntil(end.plusDays(1))
+                .map(date -> nonZeroSalesByDateMap.getOrDefault(date, DailyBookingSales.empty(date)))
+                .toList();
+    }
+
+    @Override
+    public Integer getBookingsCountBetweenDates(LocalDate start, LocalDate end) {
+        var startDateTime = start.atStartOfDay();
+        var endDateTime = end.atTime(LocalTime.MAX);
+        return bookingRepository.countBookingsByCreatedAtBetween(startDateTime, endDateTime);
     }
 
     @Override

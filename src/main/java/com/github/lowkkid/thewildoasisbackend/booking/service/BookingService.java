@@ -13,6 +13,8 @@ public interface BookingService {
 
     List<DailyBookingSales> getSalesBetweenDates(LocalDate start, LocalDate end);
 
+    Integer getBookingsCountBetweenDates(LocalDate start, LocalDate end);
+
     List<StaySummary> getStaySummariesBetweenDates(LocalDate start, LocalDate end);
 
     BookingDTO getById(Long id);

@@ -55,6 +55,29 @@ public class BookingController {
         return ResponseEntity.ok(sales);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Integer> getBookingCountBetweenDates(
+            @Parameter(
+                    description = "Start date",
+                    schema = @Schema(
+                            type = "string",
+                            format = "date",
+                            example = "2025-09-15"
+                    )
+            ) @RequestParam LocalDate start,
+            @Parameter(
+                    description = "End date",
+                    schema = @Schema(
+                            type = "string",
+                            format = "date",
+                            example = "2025-10-15"
+                    )
+            ) @RequestParam LocalDate end
+    ) {
+        var count = bookingService.getBookingsCountBetweenDates(start, end);
+        return ResponseEntity.ok(count);
+    }
+
     @GetMapping("/stays")
     public ResponseEntity<List<StaySummary>> getStaySummariesBetweenDates(
             @Parameter(
