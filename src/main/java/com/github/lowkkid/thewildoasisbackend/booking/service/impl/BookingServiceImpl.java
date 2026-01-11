@@ -81,6 +81,10 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public void checkin(Long id, CheckinRequest checkinRequest) {
         var booking = getEntityById(id);
+
+        if (!BookingStatus.UNCONFIRMED.equals(booking.getStatus())) {
+            throw new IllegalArgumentException("Only unconfirmed bookings can be checked in");
+        }
         booking.setStatus(BookingStatus.CHECKED_IN);
         booking.setIsPaid(true);
         if (checkinRequest.getAddBreakfast()) {
