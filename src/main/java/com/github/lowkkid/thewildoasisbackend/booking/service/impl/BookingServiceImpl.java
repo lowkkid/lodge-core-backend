@@ -100,7 +100,13 @@ public class BookingServiceImpl implements BookingService {
     @Override
     @Transactional
     public void checkout(Long id) {
-        bookingRepository.checkout(id);
+        var booking = getEntityById(id);
+
+        if (!BookingStatus.CHECKED_IN.equals(booking.getStatus())) {
+            throw new IllegalArgumentException("Only checked in bookings can be checked out");
+        }
+
+        booking.setStatus(BookingStatus.CHECKED_OUT);
     }
 
     @Override
@@ -108,7 +114,6 @@ public class BookingServiceImpl implements BookingService {
     public BookingDTO create(BookingDTO bookingDTO) {
         Booking booking = bookingMapper.toEntity(bookingDTO);
 
-        // Load Cabin and Guest entities
         booking.setCabin(cabinRepository.findById(bookingDTO.getCabin().getId())
                 .orElseThrow(() -> new NotFoundException("Cabin with id " + bookingDTO.getCabin().getId() + " not found")));
         booking.setGuest(guestRepository.findById(bookingDTO.getGuest().getId())
@@ -126,7 +131,6 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingMapper.toEntity(bookingDTO);
         booking.setId(existingBooking.getId());
 
-        // Load Cabin and Guest entities
         booking.setCabin(cabinRepository.findById(bookingDTO.getCabin().getId())
                 .orElseThrow(() -> new NotFoundException("Cabin with id " + bookingDTO.getCabin().getId() + " not found")));
         booking.setGuest(guestRepository.findById(bookingDTO.getGuest().getId())
