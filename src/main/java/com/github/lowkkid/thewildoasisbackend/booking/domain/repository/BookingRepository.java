@@ -52,7 +52,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     )
     FROM Booking b
     JOIN b.guest g
-    WHERE b.startDate BETWEEN :start AND :end
+    WHERE (b.startDate BETWEEN :start AND :end)
+        AND (b.status = 'CHECKED_IN' OR b.status = 'CHECKED_OUT')
     """)
     List<StaySummary> findAllStaysByStartDateBetween(LocalDateTime start, LocalDateTime end);
 
