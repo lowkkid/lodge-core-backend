@@ -3,10 +3,13 @@ package com.github.lowkkid.lodgecore.booking.model;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.github.lowkkid.lodgecore.cabin.model.CabinDTO;
 import com.github.lowkkid.lodgecore.guest.model.GuestDTO;
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
 @NoArgsConstructor

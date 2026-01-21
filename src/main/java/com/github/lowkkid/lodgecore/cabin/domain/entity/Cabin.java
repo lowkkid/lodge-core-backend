@@ -1,14 +1,19 @@
 package com.github.lowkkid.lodgecore.cabin.domain.entity;
 
 import com.github.lowkkid.lodgecore.common.domain.entity.Tracked;
-import jakarta.persistence.*;
-import lombok.*;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "cabins")
@@ -25,10 +30,6 @@ public class Cabin extends Tracked {
 
     @Column(nullable = false)
     private String name;
-
-    @Column(name = "created_at")
-    @CreationTimestamp
-    private LocalDateTime createdAt;
 
     @Column(name = "max_capacity", nullable = false)
     private Short maxCapacity;

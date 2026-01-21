@@ -1,7 +1,6 @@
 package com.github.lowkkid.lodgecore.booking.model;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

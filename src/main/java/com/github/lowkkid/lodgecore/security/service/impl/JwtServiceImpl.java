@@ -1,18 +1,23 @@
 package com.github.lowkkid.lodgecore.security.service.impl;
 
 import com.github.lowkkid.lodgecore.security.model.JwtValidationResult;
-import com.github.lowkkid.lodgecore.user.model.UserRole;
 import com.github.lowkkid.lodgecore.security.model.UserDetailsImpl;
 import com.github.lowkkid.lodgecore.security.service.JwtService;
 import com.github.lowkkid.lodgecore.security.utils.TokenExpirationTimeUtils;
-import io.jsonwebtoken.*;
+import com.github.lowkkid.lodgecore.user.model.UserRole;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import java.util.Base64;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import javax.crypto.SecretKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import javax.crypto.SecretKey;
-import java.util.*;
 
 @Service
 @Slf4j
@@ -53,7 +58,9 @@ public class JwtServiceImpl implements JwtService {
     public JwtValidationResult validate(String token) {
         try {
             Claims claims = extractAllClaims(token);
-            return claims.getExpiration().before(new Date()) ? JwtValidationResult.EXPIRED : JwtValidationResult.SUCCESS;
+            return claims.getExpiration().before(new Date())
+                    ? JwtValidationResult.EXPIRED
+                    : JwtValidationResult.SUCCESS;
         } catch (JwtException | IllegalArgumentException e) {
             log.debug("Invalid JWT: {} - {}", e.getClass().getSimpleName(), e.getMessage());
             return JwtValidationResult.ERROR;

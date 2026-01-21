@@ -1,10 +1,9 @@
 package com.github.lowkkid.lodgecore.common.utils;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
 import java.net.URI;
 import java.nio.file.Paths;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UrlUtils {
@@ -15,7 +14,7 @@ public final class UrlUtils {
             String path = uri.getPath();
             return Paths.get(path).getFileName().toString();
         } catch (Exception e) {
-            throw new RuntimeException("Failed to parse URL", e);
+            throw new IllegalArgumentException("Failed to parse URL", e);
         }
     }
 }

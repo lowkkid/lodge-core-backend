@@ -1,7 +1,7 @@
 package com.github.lowkkid.lodgecore.security.service.impl;
 
-import com.github.lowkkid.lodgecore.user.domain.repository.UserRepository;
 import com.github.lowkkid.lodgecore.security.model.UserDetailsImpl;
+import com.github.lowkkid.lodgecore.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

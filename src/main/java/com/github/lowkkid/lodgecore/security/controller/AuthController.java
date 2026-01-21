@@ -1,8 +1,8 @@
 package com.github.lowkkid.lodgecore.security.controller;
 
 import com.github.lowkkid.lodgecore.security.model.JwtTokenResponse;
-import com.github.lowkkid.lodgecore.user.model.UsernameAndPassword;
 import com.github.lowkkid.lodgecore.security.service.AuthService;
+import com.github.lowkkid.lodgecore.user.model.UsernameAndPassword;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -10,7 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("auth")
@@ -30,7 +34,7 @@ public class AuthController {
     @Operation(summary = "Sign out current user. Endpoint clears cookie with refresh token")
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletResponse response) {
-        var clearRefreshTokenCookie = ResponseCookie.from("refreshToken") // `from` without value creates empty cookie
+        var clearRefreshTokenCookie = ResponseCookie.from("refreshToken")
                 .httpOnly(true)
                 .secure(true)
                 .sameSite("None")
@@ -42,8 +46,8 @@ public class AuthController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Get new pair of tokens (access token inside response body and refresh token in cookies) " +
-            "based on valid and non-revoked refresh token")
+    @Operation(summary = "Get new pair of tokens (access token inside response body and refresh token in cookies) "
+            + "based on valid and non-revoked refresh token")
     @PostMapping("/refresh")
     public ResponseEntity<JwtTokenResponse> refresh(
             @CookieValue("refreshToken") String refreshToken, HttpServletResponse response) {

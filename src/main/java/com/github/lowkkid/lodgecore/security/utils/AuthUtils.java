@@ -1,13 +1,13 @@
 package com.github.lowkkid.lodgecore.security.utils;
 
 import com.github.lowkkid.lodgecore.security.model.UserDetailsImpl;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
 
 @Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

@@ -1,11 +1,17 @@
 package com.github.lowkkid.lodgecore.booking.service;
 
-import com.github.lowkkid.lodgecore.booking.model.*;
+import com.github.lowkkid.lodgecore.booking.model.BookingDTO;
+import com.github.lowkkid.lodgecore.booking.model.BookingStatus;
+import com.github.lowkkid.lodgecore.booking.model.BookingSummary;
+import com.github.lowkkid.lodgecore.booking.model.CheckinRequest;
+import com.github.lowkkid.lodgecore.booking.model.DailyActivity;
+import com.github.lowkkid.lodgecore.booking.model.DailyBookingSales;
+import com.github.lowkkid.lodgecore.booking.model.StaySummary;
+import java.time.LocalDate;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
-import java.time.LocalDate;
-import java.util.List;
 
 public interface BookingService {
     Page<BookingSummary> getAll(

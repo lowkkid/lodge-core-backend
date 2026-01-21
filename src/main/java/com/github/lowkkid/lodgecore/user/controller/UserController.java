@@ -1,20 +1,26 @@
 package com.github.lowkkid.lodgecore.user.controller;
 
 import com.github.lowkkid.lodgecore.user.model.UserDTO;
-import com.github.lowkkid.lodgecore.user.model.UsernameAndPassword;
 import com.github.lowkkid.lodgecore.user.model.UserRole;
+import com.github.lowkkid.lodgecore.user.model.UsernameAndPassword;
 import com.github.lowkkid.lodgecore.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("users")
@@ -44,7 +50,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Page<UserDTO>> getUsers(@RequestParam(required = false) UserRole role,
                                                   @RequestParam(defaultValue = "1") Integer pageNumber,
-                                                  @RequestParam(defaultValue = "10" ) Integer pageSize,
+                                                  @RequestParam(defaultValue = "10") Integer pageSize,
                                                   @RequestParam(defaultValue = "createdAt") String sortField,
                                                   @RequestParam(defaultValue = "DESC") Sort.Direction sortDirection) {
         var res = userService.findAllDtoByRole(role, pageNumber, pageSize, sortField, sortDirection);

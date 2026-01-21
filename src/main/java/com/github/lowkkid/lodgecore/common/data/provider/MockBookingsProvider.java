@@ -2,13 +2,12 @@ package com.github.lowkkid.lodgecore.common.data.provider;
 
 import com.github.lowkkid.lodgecore.booking.domain.entity.Booking;
 import com.github.lowkkid.lodgecore.booking.model.BookingStatus;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MockBookingsProvider {

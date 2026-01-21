@@ -6,12 +6,11 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.List;
 
 @Configuration
 public class SwaggerConfig implements WebMvcConfigurer {
@@ -37,10 +36,9 @@ public class SwaggerConfig implements WebMvcConfigurer {
                         .title("Lodge Core Backend API")
                         .version("1.0")
                         .description("API documentation for Lodge Core Backend"))
-                .addSecurityItem(new SecurityRequirement().
-                        addList("Bearer Authentication"))
-                .components(new Components().addSecuritySchemes
-                        ("Bearer Authentication", createAPIKeyScheme()))
+                .addSecurityItem(new SecurityRequirement()
+                        .addList("Bearer Authentication"))
+                .components(new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()))
                 .servers(servers);
     }
 

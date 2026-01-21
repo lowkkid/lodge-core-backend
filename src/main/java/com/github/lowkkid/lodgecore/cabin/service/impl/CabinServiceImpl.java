@@ -1,28 +1,25 @@
 package com.github.lowkkid.lodgecore.cabin.service.impl;
 
+import static com.github.lowkkid.lodgecore.common.utils.Constants.RESOURCE_WITH_ID_NOT_FOUND;
+import static com.github.lowkkid.lodgecore.common.utils.UrlUtils.extractFileName;
+
+import com.github.lowkkid.lodgecore.cabin.domain.entity.Cabin;
+import com.github.lowkkid.lodgecore.cabin.domain.repository.CabinRepository;
+import com.github.lowkkid.lodgecore.cabin.mapper.CabinMapper;
 import com.github.lowkkid.lodgecore.cabin.model.CabinCreateRequest;
 import com.github.lowkkid.lodgecore.cabin.model.CabinDTO;
 import com.github.lowkkid.lodgecore.cabin.model.CabinEditRequest;
-import com.github.lowkkid.lodgecore.cabin.domain.entity.Cabin;
-import com.github.lowkkid.lodgecore.common.exception.NotFoundException;
-import com.github.lowkkid.lodgecore.cabin.mapper.CabinMapper;
-import com.github.lowkkid.lodgecore.cabin.domain.repository.CabinRepository;
 import com.github.lowkkid.lodgecore.cabin.service.CabinService;
+import com.github.lowkkid.lodgecore.common.exception.NotFoundException;
 import com.github.lowkkid.lodgecore.minio.service.MinioService;
-
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.github.lowkkid.lodgecore.common.utils.UrlUtils.extractFileName;
 
 @Service
 @AllArgsConstructor
@@ -39,13 +36,13 @@ public class CabinServiceImpl implements CabinService {
     public List<CabinDTO> getAll() {
         return cabinRepository.findAll().stream()
                 .map(cabinMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
     public CabinDTO getById(Long id) {
         Cabin cabin = cabinRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Cabin with id " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(String.format(RESOURCE_WITH_ID_NOT_FOUND, "Cabin", id)));
         return cabinMapper.toDto(cabin);
     }
 
@@ -67,7 +64,7 @@ public class CabinServiceImpl implements CabinService {
     @Transactional
     public CabinDTO update(Long id, CabinEditRequest cabinEditRequest) {
         Cabin existingCabin = cabinRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Cabin with id " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(String.format(RESOURCE_WITH_ID_NOT_FOUND, "Cabin", id)));
         Cabin cabin = cabinMapper.toEntity(cabinEditRequest);
         cabin.setId(existingCabin.getId());
         if (cabinEditRequest.getImage() == null) {
@@ -89,7 +86,7 @@ public class CabinServiceImpl implements CabinService {
     @Transactional
     public void delete(Long id) {
         Cabin cabin = cabinRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Cabin with id " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(String.format(RESOURCE_WITH_ID_NOT_FOUND, "Cabin", id)));
         if (cabin.getImage() != null) {
             minioService.deleteFile(CABIN_IMAGES_PREFIX + extractFileName(cabin.getImage()));
         }

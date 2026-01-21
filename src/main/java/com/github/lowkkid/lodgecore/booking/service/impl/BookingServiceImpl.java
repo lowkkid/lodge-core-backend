@@ -1,26 +1,33 @@
 package com.github.lowkkid.lodgecore.booking.service.impl;
 
-import com.github.lowkkid.lodgecore.booking.model.*;
-import com.github.lowkkid.lodgecore.common.exception.AlreadyExistsException;
+import static com.github.lowkkid.lodgecore.common.utils.Constants.RESOURCE_WITH_ID_NOT_FOUND;
+
 import com.github.lowkkid.lodgecore.booking.domain.entity.Booking;
-import com.github.lowkkid.lodgecore.common.exception.NotFoundException;
-import com.github.lowkkid.lodgecore.booking.mapper.BookingMapper;
 import com.github.lowkkid.lodgecore.booking.domain.repository.BookingRepository;
-import com.github.lowkkid.lodgecore.cabin.domain.repository.CabinRepository;
-import com.github.lowkkid.lodgecore.guest.domain.repository.GuestRepository;
+import com.github.lowkkid.lodgecore.booking.mapper.BookingMapper;
+import com.github.lowkkid.lodgecore.booking.model.BookingDTO;
+import com.github.lowkkid.lodgecore.booking.model.BookingStatus;
+import com.github.lowkkid.lodgecore.booking.model.BookingSummary;
+import com.github.lowkkid.lodgecore.booking.model.CheckinRequest;
+import com.github.lowkkid.lodgecore.booking.model.DailyActivity;
+import com.github.lowkkid.lodgecore.booking.model.DailyBookingSales;
+import com.github.lowkkid.lodgecore.booking.model.StaySummary;
 import com.github.lowkkid.lodgecore.booking.service.BookingService;
+import com.github.lowkkid.lodgecore.cabin.domain.repository.CabinRepository;
+import com.github.lowkkid.lodgecore.common.exception.AlreadyExistsException;
+import com.github.lowkkid.lodgecore.common.exception.NotFoundException;
+import com.github.lowkkid.lodgecore.guest.domain.repository.GuestRepository;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -32,8 +39,12 @@ public class BookingServiceImpl implements BookingService {
     private final BookingMapper bookingMapper;
 
     @Override
-    public Page<BookingSummary> getAll(BookingStatus status, Integer pageNumber, Integer pageSize, String sortField, Sort.Direction sortDirection) {
-
+    public Page<BookingSummary> getAll(
+            BookingStatus status,
+            Integer pageNumber,
+            Integer pageSize,
+            String sortField,
+            Sort.Direction sortDirection) {
         return bookingRepository.findAllWithCabinsAndGuests(
                 status, PageRequest.of(--pageNumber, pageSize, Sort.by(sortDirection, sortField)));
     }
@@ -115,9 +126,11 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingMapper.toEntity(bookingDTO);
 
         booking.setCabin(cabinRepository.findById(bookingDTO.getCabin().getId())
-                .orElseThrow(() -> new NotFoundException("Cabin with id " + bookingDTO.getCabin().getId() + " not found")));
+                .orElseThrow(() -> new NotFoundException(
+                        String.format(RESOURCE_WITH_ID_NOT_FOUND, "Cabin", bookingDTO.getCabin().getId()))));
         booking.setGuest(guestRepository.findById(bookingDTO.getGuest().getId())
-                .orElseThrow(() -> new NotFoundException("Guest with id " + bookingDTO.getGuest().getId() + " not found")));
+                .orElseThrow(() -> new NotFoundException(
+                        String.format(RESOURCE_WITH_ID_NOT_FOUND, "Guest", bookingDTO.getGuest().getId()))));
 
         Booking savedBooking = bookingRepository.save(booking);
         return bookingMapper.toDto(savedBooking);
@@ -132,9 +145,11 @@ public class BookingServiceImpl implements BookingService {
         booking.setId(existingBooking.getId());
 
         booking.setCabin(cabinRepository.findById(bookingDTO.getCabin().getId())
-                .orElseThrow(() -> new NotFoundException("Cabin with id " + bookingDTO.getCabin().getId() + " not found")));
+                .orElseThrow(() -> new NotFoundException(String.format(
+                        RESOURCE_WITH_ID_NOT_FOUND, "Cabin", bookingDTO.getCabin().getId()))));
         booking.setGuest(guestRepository.findById(bookingDTO.getGuest().getId())
-                .orElseThrow(() -> new NotFoundException("Guest with id " + bookingDTO.getGuest().getId() + " not found")));
+                .orElseThrow(() -> new NotFoundException(
+                        String.format(RESOURCE_WITH_ID_NOT_FOUND, "Guest", bookingDTO.getGuest().getId()))));
 
         Booking savedBooking = bookingRepository.save(booking);
         return bookingMapper.toDto(savedBooking);
@@ -148,6 +163,6 @@ public class BookingServiceImpl implements BookingService {
 
     private Booking getEntityById(Long id) {
         return bookingRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Booking with id " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(String.format(RESOURCE_WITH_ID_NOT_FOUND, "Booking", id)));
     }
 }

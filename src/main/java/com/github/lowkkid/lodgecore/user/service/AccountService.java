@@ -6,5 +6,6 @@ import com.github.lowkkid.lodgecore.user.model.UpdateUserRequest;
 public interface AccountService {
 
     String update(UpdateUserRequest request);
+
     void updatePassword(UpdatePasswordRequest request);
 }

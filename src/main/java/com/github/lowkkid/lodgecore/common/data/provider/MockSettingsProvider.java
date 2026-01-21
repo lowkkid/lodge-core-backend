@@ -1,10 +1,9 @@
 package com.github.lowkkid.lodgecore.common.data.provider;
 
 import com.github.lowkkid.lodgecore.setting.domain.entity.Setting;
+import java.math.BigDecimal;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MockSettingsProvider {

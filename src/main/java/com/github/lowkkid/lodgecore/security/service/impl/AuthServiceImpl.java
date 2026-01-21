@@ -1,11 +1,11 @@
 package com.github.lowkkid.lodgecore.security.service.impl;
 
 import com.github.lowkkid.lodgecore.security.model.JwtTokenResponse;
-import com.github.lowkkid.lodgecore.user.model.UsernameAndPassword;
 import com.github.lowkkid.lodgecore.security.model.UserDetailsImpl;
 import com.github.lowkkid.lodgecore.security.service.AuthService;
 import com.github.lowkkid.lodgecore.security.service.JwtService;
 import com.github.lowkkid.lodgecore.security.service.RefreshTokenService;
+import com.github.lowkkid.lodgecore.user.model.UsernameAndPassword;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

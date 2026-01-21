@@ -1,11 +1,10 @@
 package com.github.lowkkid.lodgecore.common.data.provider;
 
 import com.github.lowkkid.lodgecore.guest.domain.entity.Country;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
 import java.util.Arrays;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MockCountriesProvider {

@@ -1,17 +1,17 @@
 package com.github.lowkkid.lodgecore.guest.service.impl;
 
-import com.github.lowkkid.lodgecore.guest.model.GuestDTO;
-import com.github.lowkkid.lodgecore.guest.domain.entity.Guest;
+import static com.github.lowkkid.lodgecore.common.utils.Constants.RESOURCE_WITH_ID_NOT_FOUND;
+
 import com.github.lowkkid.lodgecore.common.exception.NotFoundException;
-import com.github.lowkkid.lodgecore.guest.mapper.GuestMapper;
+import com.github.lowkkid.lodgecore.guest.domain.entity.Guest;
 import com.github.lowkkid.lodgecore.guest.domain.repository.GuestRepository;
+import com.github.lowkkid.lodgecore.guest.mapper.GuestMapper;
+import com.github.lowkkid.lodgecore.guest.model.GuestDTO;
 import com.github.lowkkid.lodgecore.guest.service.GuestService;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -24,13 +24,13 @@ public class GuestServiceImpl implements GuestService {
     public List<GuestDTO> getAll() {
         return guestRepository.findAll().stream()
                 .map(guestMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
     public GuestDTO getById(Long id) {
         Guest guest = guestRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Guest with id " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(String.format(RESOURCE_WITH_ID_NOT_FOUND, "Guest", id)));
         return guestMapper.toDto(guest);
     }
 
@@ -46,7 +46,7 @@ public class GuestServiceImpl implements GuestService {
     @Transactional
     public GuestDTO update(Long id, GuestDTO guestDTO) {
         Guest existingGuest = guestRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Guest with id " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(String.format(RESOURCE_WITH_ID_NOT_FOUND, "Guest", id)));
         Guest guest = guestMapper.toEntity(guestDTO);
         guest.setId(existingGuest.getId());
         Guest savedGuest = guestRepository.save(guest);
@@ -56,7 +56,7 @@ public class GuestServiceImpl implements GuestService {
     @Override
     public void delete(Long id) {
         Guest guest = guestRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Guest with id " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(String.format(RESOURCE_WITH_ID_NOT_FOUND, "Guest", id)));
         guestRepository.delete(guest);
     }
 }
