@@ -8,7 +8,5 @@ import org.mapstruct.Mapper;
 public interface BookingMapper {
 
     BookingDTO toDto(Booking booking);
-
-    Booking toEntity(BookingDTO bookingDTO);
 }
 
