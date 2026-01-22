@@ -122,13 +122,15 @@ com.github.lowkkid.lodgecore/
 Each module follows the pattern:
 ```
 {module}/
-├── controller/        # REST endpoints
+├── controller/             # REST endpoints
+│   ├── {Controller}.java   # Interface
+│   └── impl/               # Implementation
 ├── domain/
-│   ├── entity/        # JPA entities
-│   └── repository/    # Spring Data repositories
-├── service/
-│   ├── {Service}.java # Interface
-│   └── impl/          # Implementation
-├── mapper/            # MapStruct mappers
-└── model/             # Request/Response DTOs
+│   ├── entity/             # JPA entities
+│   └── repository/         # Spring Data repositories
+├── service/                # Buisness logic
+│   ├── {Service}.java      # Interface
+│   └── impl/               # Implementation
+├── mapper/                 # MapStruct mappers
+└── model/                  # Request/Response DTOs
 ```

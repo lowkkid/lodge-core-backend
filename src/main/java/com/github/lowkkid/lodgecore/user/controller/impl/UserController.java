@@ -1,10 +1,10 @@
-package com.github.lowkkid.lodgecore.user.controller;
+package com.github.lowkkid.lodgecore.user.controller.impl;
 
+import com.github.lowkkid.lodgecore.user.controller.UserApi;
 import com.github.lowkkid.lodgecore.user.model.UserDTO;
 import com.github.lowkkid.lodgecore.user.model.UserRole;
 import com.github.lowkkid.lodgecore.user.model.UsernameAndPassword;
 import com.github.lowkkid.lodgecore.user.service.UserService;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("users")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController implements UserApi {
 
     private final UserService userService;
 
-    @Operation(summary = "Create new employee (admin only)")
+    @Override
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/employee")
     public ResponseEntity<Void> createEmployee(@RequestBody @Valid UsernameAndPassword usernameAndPassword) {
@@ -37,7 +37,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Operation(summary = "Delete employee (admin only)")
+    @Override
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/employee/{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable UUID id) {
@@ -45,7 +45,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Get all users (admin only)")
+    @Override
     @PreAuthorize("hasAuthority('admin')")
     @GetMapping
     public ResponseEntity<Page<UserDTO>> getUsers(@RequestParam(required = false) UserRole role,

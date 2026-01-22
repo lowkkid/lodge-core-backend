@@ -30,7 +30,7 @@ public class CabinDTO {
     @Schema(description = "Regular price per night", example = "250.00")
     private BigDecimal regularPrice;
 
-    @Schema(description = "Discount percentage applied to the regular price", example = "10", minimum = "0", maximum = "100")
+    @Schema(description = "Discount percentage", example = "10", minimum = "0", maximum = "100")
     private Short discount;
 
     @Schema(description = "Detailed cabin description", example = "Cozy cabin with mountain views and fireplace")

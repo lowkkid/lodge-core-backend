@@ -1,6 +1,6 @@
 package com.github.lowkkid.lodgecore.booking.controller.impl;
 
-import com.github.lowkkid.lodgecore.booking.controller.BookingController;
+import com.github.lowkkid.lodgecore.booking.controller.BookingApi;
 import com.github.lowkkid.lodgecore.booking.model.BookingDTO;
 import com.github.lowkkid.lodgecore.booking.model.BookingStatus;
 import com.github.lowkkid.lodgecore.booking.model.BookingSummary;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/bookings")
 @AllArgsConstructor
-public class BookingControllerImpl implements BookingController {
+public class BookingController implements BookingApi {
 
     private final BookingService bookingService;
 

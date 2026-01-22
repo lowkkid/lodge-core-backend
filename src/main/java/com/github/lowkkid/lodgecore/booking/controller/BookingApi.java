@@ -20,8 +20,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 
-@Tag(name = "Bookings", description = "Booking management API for cabin reservations, check-in/out operations, and sales analytics")
-public interface BookingController {
+@Tag(name = "Bookings", description = "API for booking management")
+public interface BookingApi {
 
     @Operation(
             summary = "Get all bookings",
@@ -44,20 +44,20 @@ public interface BookingController {
             @Parameter(description = "Number of items per page", example = "10")
             Integer pageSize,
             @Parameter(
-                    description = "Field to sort by (if not specified - 'startDate' will be applied",
+                    description = "Field to sort by (if not specified - 'startDate' will be applied)",
                     example = "startDate",
                     schema = @Schema(allowableValues = {"startDate", "totalPrice"}))
             String sortField,
             @Parameter(
-                    description = "Sort direction (if not specified - 'DESC' will be applied",
+                    description = "Sort direction (if not specified - 'DESC' will be applied)",
                     example = "DESC")
             Sort.Direction sortDirection
     );
 
     @Operation(
             summary = "Get daily booking sales",
-            description = "Retrieves daily sales statistics within a date range. Returns a list with one entry "
-                    + "per day, including days with zero sales. Each entry contains total booking price and extras price."
+            description = "Retrieves daily sales statistics within a date range. Returns a list with one entry per "
+                    + "day, including days with zero sales. Each entry contains total booking price and extras price."
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved daily sales data",
@@ -101,8 +101,8 @@ public interface BookingController {
 
     @Operation(
             summary = "Get stay summaries",
-            description = "Retrieves a list of stay summaries for bookings with start dates within the specified range. "
-                    + "Includes pricing breakdown (cabin price, extras price, total price) and guest information."
+            description = "Retrieves a list of stay summaries for bookings with start dates within the specified range."
+                    + " Includes pricing breakdown (cabin price, extras price, total price) and guest information."
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved stay summaries",

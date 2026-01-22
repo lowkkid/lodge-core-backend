@@ -1,9 +1,9 @@
-package com.github.lowkkid.lodgecore.security.controller;
+package com.github.lowkkid.lodgecore.security.controller.impl;
 
+import com.github.lowkkid.lodgecore.security.controller.AuthApi;
 import com.github.lowkkid.lodgecore.security.model.JwtTokenResponse;
 import com.github.lowkkid.lodgecore.security.service.AuthService;
 import com.github.lowkkid.lodgecore.user.model.UsernameAndPassword;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,22 +16,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST controller implementation for authentication operations.
+ * Handles user login, logout, and token refresh endpoints.
+ */
 @RestController
 @RequestMapping("auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthController implements AuthApi {
 
     private final AuthService authService;
 
-    @Operation(summary = "Sign in as an existing user")
+    @Override
     @PostMapping("/login")
     public ResponseEntity<JwtTokenResponse> login(
-            @RequestBody @Valid UsernameAndPassword usernameAndPassword, HttpServletResponse response) {
+            @RequestBody @Valid UsernameAndPassword usernameAndPassword,
+            HttpServletResponse response) {
         var tokensResponse = authService.login(usernameAndPassword, response);
         return ResponseEntity.ok(tokensResponse);
     }
 
-    @Operation(summary = "Sign out current user. Endpoint clears cookie with refresh token")
+    @Override
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletResponse response) {
         var clearRefreshTokenCookie = ResponseCookie.from("refreshToken")
@@ -46,11 +51,11 @@ public class AuthController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Get new pair of tokens (access token inside response body and refresh token in cookies) "
-            + "based on valid and non-revoked refresh token")
+    @Override
     @PostMapping("/refresh")
     public ResponseEntity<JwtTokenResponse> refresh(
-            @CookieValue("refreshToken") String refreshToken, HttpServletResponse response) {
+            @CookieValue("refreshToken") String refreshToken,
+            HttpServletResponse response) {
         var tokensResponse = authService.refresh(refreshToken, response);
         return ResponseEntity.ok(tokensResponse);
     }

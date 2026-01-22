@@ -18,7 +18,8 @@ import lombok.NoArgsConstructor;
 public class CheckinRequest {
 
     @NotNull
-    @Schema(description = "Whether to add breakfast to the booking. If true, extrasPrice and totalPrice must be provided",
+    @Schema(description = "Whether to add breakfast to the booking. "
+            + "If true, extrasPrice and totalPrice must be provided",
             example = "true", requiredMode = Schema.RequiredMode.REQUIRED)
     private Boolean addBreakfast;
 

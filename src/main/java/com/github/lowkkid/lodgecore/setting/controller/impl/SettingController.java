@@ -1,5 +1,6 @@
-package com.github.lowkkid.lodgecore.setting.controller;
+package com.github.lowkkid.lodgecore.setting.controller.impl;
 
+import com.github.lowkkid.lodgecore.setting.controller.SettingApi;
 import com.github.lowkkid.lodgecore.setting.model.SettingDTO;
 import com.github.lowkkid.lodgecore.setting.service.SettingService;
 import jakarta.validation.Valid;
@@ -14,17 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/settings")
 @AllArgsConstructor
-public class SettingController {
+public class SettingController implements SettingApi {
 
     private final SettingService settingService;
 
+    @Override
     @GetMapping
     public ResponseEntity<SettingDTO> get() {
         SettingDTO settings = settingService.get();
         return ResponseEntity.ok(settings);
     }
 
-    @PutMapping()
+    @Override
+    @PutMapping
     public ResponseEntity<SettingDTO> update(@RequestBody @Valid SettingDTO settingDTO) {
         SettingDTO updatedSetting = settingService.update(settingDTO);
         return ResponseEntity.ok(updatedSetting);
