@@ -61,21 +61,6 @@ CompletableFuture.allOf(tasks.toArray(new CompletableFuture[0])).join();
 
 ---
 
-### JPQL Constructor Projections
-
-Instead of fetching full entities, queries use [constructor expressions](https://docs.jboss.org/hibernate/orm/6.4/userguide/html_single/Hibernate_User_Guide.html#hql-select-clause) to load only needed fields:
-
-```java
-@Query("""
-    SELECT new com.github.lowkkid.lodgecore.booking.model.BookingSummary(
-        b.id, b.createdAt, b.startDate, b.endDate, b.numNights, ...
-    )
-    FROM Booking b JOIN b.cabin c JOIN b.guest g
-    WHERE (:status IS NULL OR b.status = :status)
-    """)
-Page<BookingSummary> findAllWithCabinsAndGuests(BookingStatus status, Pageable pageable);
-```
-
 This reduces memory footprint and bandwidth for list endpoints.
 
 ---
