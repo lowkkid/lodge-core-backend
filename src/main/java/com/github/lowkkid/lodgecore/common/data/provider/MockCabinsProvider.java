@@ -1,16 +1,23 @@
 package com.github.lowkkid.lodgecore.common.data.provider;
 
-import com.github.lowkkid.lodgecore.cabin.domain.entity.Cabin;
+import com.github.lowkkid.lodgecore.cabin.model.CabinCreateRequest;
+import com.github.lowkkid.lodgecore.common.data.InMemoryMultipartFile;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.multipart.MultipartFile;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MockCabinsProvider {
-    public static final Cabin CABIN_001 = Cabin.builder()
+
+    private static final String IMAGE_PATH_TEMPLATE = "mock/cabins/%s.jpg";
+
+    public static final CabinCreateRequest CABIN_001 = CabinCreateRequest.builder()
             .name("001")
             .maxCapacity((short) 2)
             .regularPrice(new BigDecimal("250.00"))
@@ -22,11 +29,10 @@ public final class MockCabinsProvider {
                     a fireplace and a fully-equipped kitchen. The plush king-size bed, dressed in fine \
                     linens guarantees a peaceful nights sleep. Relax in the spa-like shower and unwind on \
                     the private deck with hot tub.""")
-            .image(null)
-            .createdAt(LocalDateTime.now().minusDays(90))
+            .image(loadImage("001"))
             .build();
 
-    public static final Cabin CABIN_002 = Cabin.builder()
+    public static final CabinCreateRequest CABIN_002 = CabinCreateRequest.builder()
             .name("002")
             .maxCapacity((short) 2)
             .regularPrice(new BigDecimal("350.00"))
@@ -38,11 +44,10 @@ public final class MockCabinsProvider {
                     from high-quality wood, a comfortable living area, a fireplace and a fully-equipped \
                     kitchen. The luxurious bedroom features a plush king-size bed and spa-like shower. \
                     Relax on the private deck with hot tub and take in the beauty of nature.""")
-            .image(null)
-            .createdAt(LocalDateTime.now().minusDays(90))
+            .image(loadImage("002"))
             .build();
 
-    public static final Cabin CABIN_003 = Cabin.builder()
+    public static final CabinCreateRequest CABIN_003 = CabinCreateRequest.builder()
             .name("003")
             .maxCapacity((short) 4)
             .regularPrice(new BigDecimal("300.00"))
@@ -55,11 +60,10 @@ public final class MockCabinsProvider {
                     kitchen. The bedrooms feature plush beds and spa-like bathrooms. The cabin has a \
                     private deck with a hot tub and outdoor seating area, perfect for taking in the \
                     natural surroundings.""")
-            .image(null)
-            .createdAt(LocalDateTime.now().minusDays(90))
+            .image(loadImage("003"))
             .build();
 
-    public static final Cabin CABIN_004 = Cabin.builder()
+    public static final CabinCreateRequest CABIN_004 = CabinCreateRequest.builder()
             .name("004")
             .maxCapacity((short) 4)
             .regularPrice(new BigDecimal("500.00"))
@@ -72,11 +76,10 @@ public final class MockCabinsProvider {
                     gourmet kitchen. The bedrooms are adorned with plush beds and spa-inspired en-suite \
                     bathrooms. Step outside to your private deck and soak in the natural surroundings \
                     while relaxing in your own hot tub.""")
-            .image(null)
-            .createdAt(LocalDateTime.now().minusDays(90))
+            .image(loadImage("004"))
             .build();
 
-    public static final Cabin CABIN_005 = Cabin.builder()
+    public static final CabinCreateRequest CABIN_005 = CabinCreateRequest.builder()
             .name("005")
             .maxCapacity((short) 6)
             .regularPrice(new BigDecimal("350.00"))
@@ -89,11 +92,10 @@ public final class MockCabinsProvider {
                     fully-equipped kitchen. The bedrooms are comfortable and equipped with en-suite \
                     bathrooms. Step outside to your private deck and take in the natural surroundings \
                     while relaxing in your own hot tub.""")
-            .image(null)
-            .createdAt(LocalDateTime.now().minusDays(90))
+            .image(loadImage("005"))
             .build();
 
-    public static final Cabin CABIN_006 = Cabin.builder()
+    public static final CabinCreateRequest CABIN_006 = CabinCreateRequest.builder()
             .name("006")
             .maxCapacity((short) 6)
             .regularPrice(new BigDecimal("800.00"))
@@ -106,11 +108,10 @@ public final class MockCabinsProvider {
                     gourmet kitchen. The bedrooms are adorned with plush beds and spa-like en-suite \
                     bathrooms. Step outside to your private deck and soak in the natural surroundings \
                     while relaxing in your own hot tub.""")
-            .image(null)
-            .createdAt(LocalDateTime.now().minusDays(90))
+            .image(loadImage("006"))
             .build();
 
-    public static final Cabin CABIN_007 = Cabin.builder()
+    public static final CabinCreateRequest CABIN_007 = CabinCreateRequest.builder()
             .name("007")
             .maxCapacity((short) 8)
             .regularPrice(new BigDecimal("600.00"))
@@ -123,11 +124,10 @@ public final class MockCabinsProvider {
                     fireplace, and a fully-equipped kitchen. The bedrooms are comfortable and equipped \
                     with en-suite bathrooms. The cabin has a private deck with a hot tub and outdoor \
                     seating area, perfect for taking in the natural surroundings.""")
-            .image(null)
-            .createdAt(LocalDateTime.now().minusDays(90))
+            .image(loadImage("007"))
             .build();
 
-    public static final Cabin CABIN_008 = Cabin.builder()
+    public static final CabinCreateRequest CABIN_008 = CabinCreateRequest.builder()
             .name("008")
             .maxCapacity((short) 10)
             .regularPrice(new BigDecimal("1400.00"))
@@ -142,11 +142,10 @@ public final class MockCabinsProvider {
                     comfort and luxury, with plush beds and en-suite spa-inspired bathrooms. Step outside \
                     and immerse yourself in the beauty of nature from your private deck, featuring a \
                     luxurious hot tub and ample seating areas for ultimate relaxation and enjoyment.""")
-            .image(null)
-            .createdAt(LocalDateTime.now().minusDays(90))
+            .image(loadImage("008"))
             .build();
 
-    public static final List<Cabin> ALL_CABINS = Arrays.asList(
+    public static final List<CabinCreateRequest> ALL_CABINS = Arrays.asList(
             CABIN_001,
             CABIN_002,
             CABIN_003,
@@ -156,4 +155,13 @@ public final class MockCabinsProvider {
             CABIN_007,
             CABIN_008
     );
+
+    private static MultipartFile loadImage(String name) {
+        String path = String.format(IMAGE_PATH_TEMPLATE, name);
+        try (InputStream inputStream = new ClassPathResource(path).getInputStream()) {
+            return new InMemoryMultipartFile(name, name + ".jpg", "image/jpeg", inputStream.readAllBytes());
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to load mock cabin image: " + path, e);
+        }
+    }
 }

@@ -1,9 +1,12 @@
 package com.github.lowkkid.lodgecore.common.data;
 
+import static com.github.lowkkid.lodgecore.common.utils.UrlUtils.extractFileName;
+
 import com.github.lowkkid.lodgecore.booking.domain.entity.Booking;
 import com.github.lowkkid.lodgecore.booking.domain.repository.BookingRepository;
 import com.github.lowkkid.lodgecore.cabin.domain.entity.Cabin;
 import com.github.lowkkid.lodgecore.cabin.domain.repository.CabinRepository;
+import com.github.lowkkid.lodgecore.cabin.service.CabinService;
 import com.github.lowkkid.lodgecore.common.data.provider.MockBookingsProvider;
 import com.github.lowkkid.lodgecore.common.data.provider.MockCabinsProvider;
 import com.github.lowkkid.lodgecore.common.data.provider.MockCountriesProvider;
@@ -14,6 +17,7 @@ import com.github.lowkkid.lodgecore.guest.domain.entity.Country;
 import com.github.lowkkid.lodgecore.guest.domain.entity.Guest;
 import com.github.lowkkid.lodgecore.guest.domain.repository.CountryRepository;
 import com.github.lowkkid.lodgecore.guest.domain.repository.GuestRepository;
+import com.github.lowkkid.lodgecore.minio.service.MinioService;
 import com.github.lowkkid.lodgecore.setting.domain.repository.SettingRepository;
 import com.github.lowkkid.lodgecore.user.domain.repository.UserRepository;
 import jakarta.persistence.EntityManager;
@@ -31,7 +35,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class MockDataService {
 
+    private static final String CABIN_IMAGES_PREFIX = "cabins/";
+
     private final CabinRepository cabinRepository;
+    private final CabinService cabinService;
+    private final MinioService minioService;
     private final SettingRepository settingRepository;
     private final CountryRepository countryRepository;
     private final GuestRepository guestRepository;
@@ -236,9 +244,21 @@ public class MockDataService {
         userRepository.deleteAllInBatch();
         settingRepository.deleteAllInBatch();
         bookingRepository.deleteAllInBatch();
+        clearCabinImages();
         cabinRepository.deleteAllInBatch();
         guestRepository.deleteAllInBatch();
         countryRepository.deleteAllInBatch();
+        // Bulk deletes bypass the persistence context, so entities loaded above (e.g. cabins fetched
+        // for image cleanup) stay managed and would clash with freshly inserted ids. Detach them.
+        entityManager.clear();
+    }
+
+    private void clearCabinImages() {
+        cabinRepository.findAll().forEach(cabin -> {
+            if (cabin.getImage() != null) {
+                minioService.deleteFile(CABIN_IMAGES_PREFIX + extractFileName(cabin.getImage()));
+            }
+        });
     }
 
     private void resetAllSequences() {
@@ -273,7 +293,7 @@ public class MockDataService {
     }
 
     private void loadCabins() {
-        cabinRepository.saveAll(MockCabinsProvider.ALL_CABINS);
+        MockCabinsProvider.ALL_CABINS.forEach(cabinService::create);
     }
 
     private void loadSettings() {

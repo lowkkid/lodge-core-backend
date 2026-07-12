@@ -93,17 +93,20 @@ public class CabinServiceImpl implements CabinService {
     public boolean refreshCabinImages() {
         try {
             AtomicBoolean hasErrors = new AtomicBoolean(false);
-            List<Cabin> allCabins = cabinRepository.findAll();
+            List<Cabin> cabinsWithImage = cabinRepository.findAll().stream()
+                    .filter(cabin -> cabin.getImage() != null)
+                    .toList();
 
-            var newUrls = new ConcurrentHashMap<Long, String>(allCabins.size());
-            var tasks = allCabins.stream()
+            var newUrls = new ConcurrentHashMap<Long, String>(cabinsWithImage.size());
+            var tasks = cabinsWithImage.stream()
                     .map(cabin -> CompletableFuture.runAsync(() -> {
-                        var newUrl = minioService.generateDownloadUrlWithRetry(CABIN_IMAGES_PREFIX + cabin.getId());
+                        var newUrl = minioService.generateDownloadUrlWithRetry(
+                                CABIN_IMAGES_PREFIX + extractFileName(cabin.getImage()));
                         newUrls.put(cabin.getId(), newUrl);
                     })).toList();
 
-            CompletableFuture.allOf(tasks.toArray(new CompletableFuture[allCabins.size()])).join();
-            allCabins.forEach(cabin -> {
+            CompletableFuture.allOf(tasks.toArray(new CompletableFuture[cabinsWithImage.size()])).join();
+            cabinsWithImage.forEach(cabin -> {
                 var newUrl = newUrls.get(cabin.getId());
                 if (newUrl == null) {
                     log.info("Failed to generate download url for cabin {}", cabin.getId());
@@ -113,7 +116,7 @@ public class CabinServiceImpl implements CabinService {
                 }
 
             });
-            cabinRepository.saveAll(allCabins);
+            cabinRepository.saveAll(cabinsWithImage);
             return !hasErrors.get();
         } catch (Exception e) {
             throw new StorageException("Failed to refresh cabin images", e);
