@@ -61,6 +61,7 @@ jobs:
             docker run -d \
               --name ${{ env.DOCKER_IMAGE_NAME }}-container \
               -p 8080:8080 \
+              -p 127.0.0.1:9090:9090 \
               --env-file .env \
               --restart unless-stopped \
               --network shared-services \
