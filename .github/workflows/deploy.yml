@@ -63,7 +63,7 @@ jobs:
               -p 8080:8080 \
               --env-file .env \
               --restart unless-stopped \
-              --network database_shared-services \
+              --network shared-services \
               ${{ env.DOCKER_IMAGE_NAME }}
             
             echo "Deployment completed!"

@@ -8,6 +8,7 @@ import io.minio.PutObjectArgs;
 import io.minio.RemoveObjectArgs;
 import io.minio.http.Method;
 import java.util.concurrent.TimeUnit;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
@@ -20,11 +21,15 @@ public class MinioServiceImpl implements MinioService {
 
     private static final int EXPIRY_OF_MINIO_FILES_IN_HOURS = 48;
     private final MinioClient minioClient;
+    private final MinioClient minioPresignClient;
     private final String applicationBucket;
 
 
-    public MinioServiceImpl(MinioClient minioClient, @Value("${minio.bucket}") String applicationBucket) {
+    public MinioServiceImpl(@Qualifier("minioClient") MinioClient minioClient,
+                            @Qualifier("minioPresignClient") MinioClient minioPresignClient,
+                            @Value("${minio.bucket}") String applicationBucket) {
         this.minioClient = minioClient;
+        this.minioPresignClient = minioPresignClient;
         this.applicationBucket = applicationBucket;
     }
 
@@ -64,7 +69,7 @@ public class MinioServiceImpl implements MinioService {
     @Override
     public String generateDownloadUrl(String objectName) {
         try {
-            return minioClient.getPresignedObjectUrl(
+            return minioPresignClient.getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()
                             .method(Method.GET)
                             .bucket(applicationBucket)
